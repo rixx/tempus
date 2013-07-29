@@ -7,12 +7,19 @@ import csv
 logfile_path = os.path.expanduser('~') + '/.tempus/log'
 
 def start():
+    writelog(1)
+
+def stop():
+    writelog(0)
+
+def writelog(status):
     logfile = open(logfile_path, 'a+')
     logwriter = csv.writer(logfile)
 
-    logwriter.writerow(['1', math.trunc(time.time())])
+    logwriter.writerow([status, math.trunc(time.time())])
 
     logfile.close()
+
 
 
 if __name__ == "__main__":
