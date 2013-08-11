@@ -22,6 +22,13 @@ def writelog(status):
 
     logfile.close()
 
+def clear():
+    try:
+        os.remove(logfile_path)
+        print("Log has been cleared.")
+    except FileNotFoundError:
+        print("No logfile at "+logfile_path);
+
 def status():
     
     try:
@@ -29,7 +36,7 @@ def status():
         logreader = csv.reader(logfile)
 
     except FileNotFoundError:
-        print("You haven't even started yet.");
+        print("You haven't even started yet, or the logfile at "+logfile_path+" has gone missing.");
         return;
 
     sum_seconds = 0
@@ -76,3 +83,6 @@ if __name__ == "__main__":
 
         if "status" == sys.argv[1]:
             status()
+
+        if "clear" == sys.argv[1]:
+            clear()
