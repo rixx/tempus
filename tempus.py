@@ -23,8 +23,14 @@ def writelog(status):
     logfile.close()
 
 def status():
-    logfile = open(logfile_path, 'r')
-    logreader = csv.reader(logfile)
+    
+    try:
+        logfile = open(logfile_path, 'r')
+        logreader = csv.reader(logfile)
+
+    except FileNotFoundError:
+        print("You haven't even started yet.");
+        return;
 
     sum_seconds = 0
     status = 0
