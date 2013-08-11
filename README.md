@@ -9,7 +9,7 @@ Tempus is CLI time tracking app. It requires Python 3.
 `tempus clear` resets the log, all data will be lost.
 
 #Todo
-"""
+```
 [ ] Set up a database
     [ ] Read up on ORM patterns
     [ ] Decide on ORM
@@ -34,4 +34,4 @@ Tempus is CLI time tracking app. It requires Python 3.
     [ ] per project/general
     [ ] intelligent reporting
 
-"""
+```
