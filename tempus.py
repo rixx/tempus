@@ -4,9 +4,9 @@ import os
 import sys
 import logging
 import sqlalchemy
-from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String, ForeignKey, Table
 from sqlalchemy.orm import sessionmaker, relationship, backref
+from sqlalchemy.ext.declarative import declarative_base
 
 # init():
 #   logger starten
@@ -14,12 +14,16 @@ from sqlalchemy.orm import sessionmaker, relationship, backref
 #   mapping
 
 logfile_path = os.path.expanduser('~') + '/.tempus/log'
+config_path = os.path.expanduser('~') + '/.tempus/config'
+
 logging.basicConfig(filename=logfile_path, level=logging.DEBUG, format="%(asctime)s - %(levelname)s: %(message)s")
 logger = logging.getLogger("tempus")
 
+#todo: connection string via config
 engine = sqlalchemy.create_engine("mysql+mysqlconnector://tempususer:tempuspw@localhost/tempusdb")
 Base = declarative_base()
 
+#for mapping projects:tags as m:n relation
 projects_tags = Table('projects_tags', Base.metadata, Column('project_id', Integer, ForeignKey('projects.id')),\
                       Column('tags_id', Integer, ForeignKey('tags.id')))
 
@@ -51,18 +55,25 @@ class Tag(Base):
 
     projects = relationship("Project", secondary=projects_tags, back_populates="tags")
 
+    def __init__(self,name):
+        self.name = name
+
+#create if not exist
 Base.metadata.create_all(engine)
 
+#start a session
 Session = sessionmaker(bind=engine)
 session = Session()
 
+#EXAMPLE: new project
 #project = Project("blakeks111")
 #project.tags.append(Tag(name="bla"))
 #session.add(project)
 
-tag = session.query(Tag).filter(Tag.name == "bla").first()
-print(vars(tag.projects))
-tag.projects.append(Project(name="hastenichgesehn"))
+#EXAMPLE: add tag to project
+#tag = session.query(Tag).filter(Tag.name == "bla").first()
+#print(vars(tag.projects))
+#tag.projects.append(Project(name="hastenichgesehn"))
 
 session.commit()
 
