@@ -66,14 +66,6 @@ tag.projects.append(Project(name="hastenichgesehn"))
 
 session.commit()
 
-for class_ in [Project,Entry,Tag]:
-    print(class_.__name__)
-    for var in vars(class_):
-        if var[0] != '_':
-            print(var)
-
-    print()
-
 
 def print_usage():
     pass
@@ -81,40 +73,55 @@ def print_usage():
 
 if __name__ == "__main__":
 
-    if len(sys.argv) < 2:
+    if 1 == len(sys.argv):
         print_usage()
 
-    elif "start" == sys.argv[1]:
+    elif ("start" == sys.argv[1]) and (2 == len(sys.argv)):
         pass
 
-    elif "pause" == sys.argv[1]:
+    elif ("start" == sys.argv[1]) and (3 == len(sys.argv)):
         pass
 
-    elif "stop" == sys.argv[1]:
+    elif ("pause" == sys.argv[1]) and (2 == len(sys.argv)):
         pass
 
-    elif ("list" == sys.argv[1]) and ("projects" == sys.argv[2]):
+    elif ("stop" == sys.argv[1]) and (2 == len(sys.argv)):
         pass
 
-    elif ("list" == sys.argv[1]) and ("tags" == sys.argv[2]):
+    elif ("list" == sys.argv[1]) and ("projects" == sys.argv[2]) and (3 == len(sys.argv)):
         pass
 
-    elif ("add" == sys.argv[1]) and ("projects" == sys.argv[2]):
+    elif ("list" == sys.argv[1]) and ("tags" == sys.argv[2]) and (3 == len(sys.argv)):
         pass
 
-    elif ("add" == sys.argv[1]) and ("tags" == sys.argv[2]):
+    elif ("add" == sys.argv[1]) and ("projects" == sys.argv[2]) and (4 == len(sys.argv)):
         pass
 
-    elif "status" == sys.argv[1]:
+    elif ("add" == sys.argv[1]) and ("tags" == sys.argv[2]) and (4 == len(sys.argv)):
+        pass
 
-        if 2 == len(sys.argv):
-            pass
+    elif ("modify" == sys.argv[1]) and ("project" == sys.argv[2]) and ("add" == sys.argv[4]) and ("tag" == sys.argv[5])\
+         and (7 == len(sys.argv)):
+        pass
 
-        elif ("project" == sys.argv[2]) and (4 == len(sys.argv)):
-            pass
+    elif ("modify" == sys.argv[1]) and ("project" == sys.argv[2]) and ("remove" == sys.argv[4]) and ("tag" == sys.argv[5]) \
+         and (7 == len(sys.argv)):
+        pass
 
-        elif ("tag" == sys.argv[2]) and (4 == len(sys.argv)):
-            pass
+    elif ("modify" == sys.argv[1]) and ("project" == sys.argv[2]) and ("rename" == sys.argv[4]) and (6 == len(sys.argv)):
+        pass
+
+    elif ("modify" == sys.argv[1]) and ("tag" == sys.argv[2]) and ("rename" == sys.argv[4]) and (6 == len(sys.argv)):
+        pass
+
+    elif ("status" == sys.argv[1]) and (2 == len(sys.argv)):
+        pass
+
+    elif ("status" == sys.argv[1]) and ("project" == sys.argv[2]) and (4 == len(sys.argv)):
+        pass
+
+    elif ("status" == sys.argv[1]) and ("project" == sys.argv[2]) and (4 == len(sys.argv)):
+        pass
 
     else:
         print_usage()
