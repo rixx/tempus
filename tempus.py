@@ -23,7 +23,6 @@ Base = declarative_base()
 projects_tags = Table('projects_tags', Base.metadata, Column('project_id', Integer, ForeignKey('projects.id')),\
                       Column('tags_id', Integer, ForeignKey('tags.id')))
 
-
 class Project(Base):
     __tablename__ = "projects"
     id = Column(Integer, primary_key=True)
