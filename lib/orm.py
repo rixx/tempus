@@ -29,7 +29,7 @@ class Project(Base):
             print("Sorry, the new project could not be added … are you sure it doesn't exist already?")
 
     def init_tags(self, session):
-        print("The following tags exist: " + Tag.get_tag_list(session))
+        print("The following tags exist: " + get_tag_list(session))
 
         user_tag_list = input("Please enter the tags for this project separated by commas: ").split(',')
 
@@ -62,12 +62,12 @@ class Tag(Base):
         except:
             print("Sorry, the new tag could not be added … are you sure it doesn't exist already?")
 
-    def get_tag_list(session):
-        query = session.query(Tag.name).all()
-        return_string = ''
+def get_tag_list(session):
+    query = session.query(Tag.name).all()
+    return_string = ''
 
-        for tag in query:
-            return_string += tag.name + " "
+    for tag in query:
+        return_string += tag.name + " "
 
-        return return_string
+    return return_string
 

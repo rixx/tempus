@@ -26,22 +26,10 @@ def getSession():
     Session = sessionmaker(bind=engine)
     return Session()
 
-#start a session
-#Session = sessionmaker(bind=engine)
-#session = Session()
-
 #EXAMPLE: new project
 #project = Project("blakeks111")
 #project.tags.append(Tag(name="bla"))
 #session.add(project)
-
-#EXAMPLE: add tag to project
-#tag = session.query(Tag).filter(Tag.name == "bla").first()
-#print(vars(tag.projects))
-#tag.projects.append(Project(name="hastenichgesehn"))
-
-#session.commit()
-
 
 def print_usage():
     pass
@@ -65,7 +53,11 @@ if __name__ == "__main__":
         pass
 
     elif ("stop" == sys.argv[1]) and (2 == len(sys.argv)):
-        pass
+        current_project = Project.get_current_project()
+        if (current_project):
+            current_project.stop()
+        else:
+            print("Hm, it seems no project was running.")
 
     elif ("list" == sys.argv[1]) and ("projects" == sys.argv[2]) and (3 == len(sys.argv)):
         pass
