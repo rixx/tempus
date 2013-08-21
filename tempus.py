@@ -5,6 +5,7 @@ import sys
 import logging
 import sqlalchemy
 from sqlalchemy.orm import sessionmaker
+import lib
 from lib.orm import Project, Tag, Base
 
 # init():
@@ -50,20 +51,20 @@ if __name__ == "__main__":
         pass
 
     elif ("pause" == sys.argv[1]) and (2 == len(sys.argv)):
-        pass
+        session = getSession()
+        Project.stop_running_project(session)
+        pause_project = Project("PAUSE")
+        pause_project.start()
+        pause_project.insert(session)
 
     elif ("stop" == sys.argv[1]) and (2 == len(sys.argv)):
-        current_project = Project.get_current_project()
-        if (current_project):
-            current_project.stop()
-        else:
-            print("Hm, it seems no project was running.")
+        Project.stop_running_project(getSession())
 
     elif ("list" == sys.argv[1]) and ("projects" == sys.argv[2]) and (3 == len(sys.argv)):
-        pass
+        Project.get_list(getSession())
 
     elif ("list" == sys.argv[1]) and ("tags" == sys.argv[2]) and (3 == len(sys.argv)):
-        pass
+        Tag.get_list(getSession())
 
     elif ("add" == sys.argv[1]) and ("project" == sys.argv[2]) and (4 == len(sys.argv)):
         session = getSession()
@@ -77,17 +78,29 @@ if __name__ == "__main__":
 
     elif ("modify" == sys.argv[1]) and ("project" == sys.argv[2]) and ("add" == sys.argv[4]) and ("tag" == sys.argv[5])\
          and (7 == len(sys.argv)):
-        pass
+        session = getSession()
+        project = Project.get_by_name(sys.argv[3], session)
+        project.add_tag(sys.argv[6])
+        project.insert(session)
 
     elif ("modify" == sys.argv[1]) and ("project" == sys.argv[2]) and ("remove" == sys.argv[4]) and ("tag" == sys.argv[5]) \
          and (7 == len(sys.argv)):
-        pass
+        session = getSession()
+        project = Project.get_by_name(sys.argv[3], session)
+        project.remove_tag(sys.argv[6])
+        project.insert(session)
 
     elif ("modify" == sys.argv[1]) and ("project" == sys.argv[2]) and ("rename" == sys.argv[4]) and (6 == len(sys.argv)):
-        pass
+        session = getSession()
+        project = Project.get_by_name(sys.argv[3], session)
+        project.name = sys.argv[5]
+        project.insert(session)
 
     elif ("modify" == sys.argv[1]) and ("tag" == sys.argv[2]) and ("rename" == sys.argv[4]) and (6 == len(sys.argv)):
-        pass
+        session = getSession()
+        tag = Tag.get_by_name(sys.argv[3], session)
+        tag.name = sys.argv[5]
+        tag.insert(session)
 
     elif ("status" == sys.argv[1]) and (2 == len(sys.argv)):
         pass
