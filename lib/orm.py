@@ -21,6 +21,13 @@ class Project(Base):
     def __init__(self, name):
         self.name = name
 
+    def insert(self, session):
+        try:
+            session.add(self)
+            session.commit()
+        except:
+            print("Sorry, the new project could not be added … are you sure it doesn't exist already?")
+
 class Entry(Base):
     __tablename__ = "entries"
     id = Column(Integer, primary_key=True)
@@ -35,8 +42,14 @@ class Tag(Base):
     __tablename__ = "tags"
     id = Column(Integer, primary_key=True)
     name = Column(String(20), unique=True)
-
     projects = relationship("Project", secondary=projects_tags, back_populates="tags")
 
     def __init__(self,name):
         self.name = name
+
+    def insert(self,session):
+        try:
+            session.add(self)
+            session.commit()
+        except:
+            print("Sorry, the new tag could not be added … are you sure it doesn't exist already?")
