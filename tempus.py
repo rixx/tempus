@@ -20,7 +20,7 @@ def getSession():
     logger = logging.getLogger("tempus")
 
     #todo: connection string via config
-    engine = sqlalchemy.create_engine("mysql+mysqlconnector://tempususer:tempuspw@localhost/tempusdb")
+    engine = sqlalchemy.create_engine("mysql+mysqlconnector://tempususer:tempuspw@localhost/tempusdb", echo=False)
     Base.metadata.create_all(engine)
 
     Session = sessionmaker(bind=engine)
@@ -74,8 +74,10 @@ if __name__ == "__main__":
         pass
 
     elif ("add" == sys.argv[1]) and ("project" == sys.argv[2]) and (4 == len(sys.argv)):
+        session = getSession()
         new_project = Project(sys.argv[3])
-        new_project.insert(getSession())
+        new_project.init_tags(session)
+        new_project.insert(session)
 
     elif ("add" == sys.argv[1]) and ("tag" == sys.argv[2]) and (4 == len(sys.argv)):
         new_tag = Tag(sys.argv[3])
