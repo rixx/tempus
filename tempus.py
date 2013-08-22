@@ -7,11 +7,8 @@ import sqlalchemy
 from sqlalchemy.orm import sessionmaker
 import lib
 from lib.orm import Project, Tag, Base
+from configparser import ConfigParser
 
-# init():
-#   logger starten
-#   config einlesen
-#   mapping
 
 logfile_path = os.path.expanduser('~') + '/.tempus/log'
 config_path = os.path.expanduser('~') + '/.tempus/config'
@@ -19,6 +16,9 @@ config_path = os.path.expanduser('~') + '/.tempus/config'
 def get_session():
     logging.basicConfig(filename=logfile_path, level=logging.DEBUG, format="%(asctime)s - %(levelname)s: %(message)s")
     logger = logging.getLogger("tempus")
+
+    config = ConfigParser()
+
 
     #todo: connection string via config
     engine = sqlalchemy.create_engine("mysql+mysqlconnector://tempususer:tempuspw@localhost/tempusdb", echo=False)

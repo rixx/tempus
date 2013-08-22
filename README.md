@@ -12,6 +12,14 @@ Tempus is CLI time tracking app. It requires Python 3, mysql-connector and SQLAl
 * `tempus remove [all| [project|tag] name]` removes everything or a project/tag by name. Gives an "Are you sure?" dialog. (to be implemented)
 * `tempus modify project name [add|remove] tag name` adds or removes tags. (to be implemented)
 * `tempus modify [project|tag] name rename new_name` renames a tag or project. (to be implemented)
-* `tempus status {[project|tag] name} gives general or more specific statistics. (to be implemented)
+* `tempus status {[project|tag] name` gives general or more specific statistics. (to be implemented)
 * `tempus clear` resets the log, all data entries will be lost. Projects and tags are preserved. (to be implemented)
 
+#Todo
+```
+[ ] Consider changing `modify project [add|remove] tag` to `[tag|untag] project`
+[ ] dictionary: input : function(args)
+[ ] output out of orm
+[ ] divide orm into modules, put mapping into __init__.py
+
+```
