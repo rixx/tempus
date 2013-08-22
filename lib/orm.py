@@ -42,6 +42,9 @@ class Project(Base):
     def add_tag(self, name, session):
         pass
 
+    def status(self, session):
+        pass
+
     @staticmethod
     def stop_running_project(session):
         current_project = session.query(Project) #und so
@@ -68,6 +71,10 @@ class Entry(Base):
 
     project = relationship("Project", back_populates="entries")
 
+    @staticmethod
+    def status(session):
+        pass
+
 
 class Tag(Base):
     __tablename__ = "tags"
@@ -83,6 +90,9 @@ class Tag(Base):
             session.commit()
         except:
             print("Sorry, the new tag could not be added … are you sure it doesn't exist already?")
+
+    def status(self, session):
+        pass
 
     @staticmethod
     def get_list(session):
