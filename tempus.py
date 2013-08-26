@@ -5,9 +5,11 @@ import sys
 import logging
 import sqlalchemy
 from sqlalchemy.orm import sessionmaker
-import lib
-from lib.orm import Project, Tag, Base
 from configparser import ConfigParser
+from lib.db.entry import Entry
+from lib.db.project import Project
+from lib.db.tag import Tag
+from lib.db.base import Base
 
 
 logfile_path = os.path.expanduser('~') + '/.tempus/log'
