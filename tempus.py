@@ -27,11 +27,6 @@ def get_session():
     Session = sessionmaker(bind=engine)
     return Session()
 
-#EXAMPLE: new project
-#project = Project("blakeks111")
-#project.tags.append(Tag(name="bla"))
-#session.add(project)
-
 def print_usage():
     pass
 
