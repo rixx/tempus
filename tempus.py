@@ -3,32 +3,17 @@
 import os
 import sys
 import logging
-from configparser import ConfigParser
-import sqlalchemy
-from sqlalchemy.orm import sessionmaker
 from lib.db.entry import Entry
 from lib.db.project import Project
 from lib.db.tag import Tag
-from lib.db.base import Base
+from lib.db.base import get_session
 
 
 logfile_path = os.path.expanduser('~') + '/.tempus/log'
-config_path = os.path.expanduser('~') + '/.tempus/config'
-
 logging.basicConfig(filename=logfile_path, level=logging.DEBUG, format="%(asctime)s - %(levelname)s: %(message)s")
 logger = logging.getLogger("tempus")
 
-def get_session():
-    config = ConfigParser()
-    config.read(config_path)
-    connection_string = config['General']['Connection']
 
-    #todo: connection string via config
-    engine = sqlalchemy.create_engine(connection_string, echo=False)
-    Base.metadata.create_all(engine)
-
-    Session = sessionmaker(bind=engine)
-    return Session()
 
 def print_usage():
     pass
