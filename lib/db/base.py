@@ -24,7 +24,6 @@ def get_session():
     except:
         print("Please define a connection string in your config file located at "+config_path+".")
 
-
     try:
         engine = sqlalchemy.create_engine(connection_string, echo=False)
         Base.metadata.create_all(engine)
