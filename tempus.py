@@ -19,6 +19,9 @@ def print_usage():
     pass
 
 
+#dict = {"start": print_usage}
+#input_parser.dict[sys.argv[1]]
+
 if __name__ == "__main__":
 
     # if tempus is called with no parameter
