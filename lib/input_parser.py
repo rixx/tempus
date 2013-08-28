@@ -23,17 +23,27 @@ def print_usage():
 
 
 def start(args):
-     # handles `tempus start`
-    if 0 == len(args):
-        new_project = Project()
-        new_project.get_latest()
-        new_project.start()
+    if len(args) < 2:
+        session = get_session()
 
-    # handles `tempus start <project name>`
-    elif 1 == len(args):
-        project = Project(args[0])
+        # hadles `tempus start`
+        if 0 == len(args):
+            try:
+                project = Project().get_latest
+            except:
+                print("No prior project has been found. Please specify the project you wish to start.")
+                return False
+
+        # handles `tempus start <project name>`
+        elif 1 == len(args):
+            try:
+                project = Project.get_by_name(args[0], session)
+            except:
+                print("Sorry, couldn't find a project named " + args[0] + ".")
+                return False
+
         project.start()
-        project.insert(get_session())
+        project.insert(session)
 
     else:
         print_usage()

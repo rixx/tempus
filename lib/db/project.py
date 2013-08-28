@@ -46,6 +46,12 @@ class Project(Base):
     def status(self, session):
         pass
 
+    def start(self):
+        pass
+
+    def stop(self):
+        pass
+
     @staticmethod
     def stop_running_project(session):
         current_project = session.query(Project) #und so
