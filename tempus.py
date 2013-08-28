@@ -10,8 +10,8 @@ logfile_path = os.path.expanduser('~') + '/.tempus/log'
 logging.basicConfig(filename=logfile_path, level=logging.DEBUG, format="%(asctime)s - %(levelname)s: %(message)s")
 logger = logging.getLogger("tempus")
 
-input_mapper = {"start": start, "pause": pause, "stop": stop, "add": add, "list": list, "tag": tag, "untag": untag, "rename": rename,\
-        "status": status, "clear": clear}
+input_mapper = dict(start=start, pause=pause, stop=stop, add=add, list=list, tag=tag, untag=untag, rename=rename,
+                    status=status, clear=clear)
 
 if __name__ == "__main__":
 
@@ -25,6 +25,5 @@ if __name__ == "__main__":
         try:
             input_mapper[sys.argv[1]](sys.argv[2:])
         except:
-            input_parser.print_usage()
-            print("Exception: couldn't access inputparser")
+            print_usage()
             sys.exit(-1)
