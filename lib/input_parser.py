@@ -1,3 +1,15 @@
+"""
+tempus usage:
+   start {<project name>} - starts the timer. If no project name is given, the last running project is assumed (pause project not included)
+   pause - pauses the timer and starts the default pause project
+   stop - stops the timer
+   list [projects|tags] - givs a list of all projects or tags
+   add [project|tag] <name> - adds a project or tag
+   [tag|untag] <project name> <tag name> - adds or removes a tag
+   rename [project|tag] <old name> <new name> - renames a project or tag
+   status {[project|tag] <name>} - either gives general or more specific statistics
+   clear - resets the log, all data entries wil be lost, projects and tags are preserved
+"""
 __author__ = 'rixx'
 
 from lib.db.entry import Entry
@@ -7,7 +19,8 @@ from lib.db.base import get_session
 
 
 def print_usage():
-    pass
+    print(__doc__)
+
 
 def start(args):
      # handles `tempus start`
