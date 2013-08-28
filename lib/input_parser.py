@@ -26,15 +26,15 @@ def start(args):
     if len(args) < 2:
         session = get_session()
 
-        # hadles `tempus start`
+        #either get running project, stop and output, or just … fail?
+
         if 0 == len(args):
             try:
-                project = Project().get_latest
+                project = Project.get_latest()
             except:
                 print("No prior project has been found. Please specify the project you wish to start.")
                 return False
 
-        # handles `tempus start <project name>`
         elif 1 == len(args):
             try:
                 project = Project.get_by_name(args[0], session)
@@ -52,8 +52,16 @@ def start(args):
 def pause(args):
     if 0 == len(args):
         session = get_session()
-        Project.stop_running_project(session)
-        pause_project = Project("PAUSE")
+
+        try:
+            project = Project.get_latest(session)
+            project.stop()
+            project.insert(session)
+        except:
+            print("There was no project to be paused, seems you were slacking off already ;)")
+            return False
+
+        pause_project = Project.get_by_name("PAUSE", session)
         pause_project.start()
         pause_project.insert(session)
 

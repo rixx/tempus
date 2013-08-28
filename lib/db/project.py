@@ -53,7 +53,7 @@ class Project(Base):
         pass
 
     @staticmethod
-    def stop_running_project(session):
+    def get_latest(session):
         current_project = session.query(Project) #und so
 
         if (current_project):
