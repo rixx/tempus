@@ -23,7 +23,11 @@ if __name__ == "__main__":
     # otherwise try to call the appropriate function. Failing
     else:
         try:
-            input_mapper[sys.argv[1]](sys.argv[2:])
-        except:
+            logger.debug("Invoking " + sys.argv[1] + "(" + sys.argv[2:] + ").")
+            return_code = input_mapper[sys.argv[1]](sys.argv[2:])
+            logger.info("Finished with return code " + return_code)
+
+        except KeyError:
+            logger.debug("Error invoking " + sys.argv[1] + "(" + sys.argv[2:] + ").")
             print_usage()
             sys.exit(-1)
