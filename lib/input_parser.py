@@ -33,7 +33,7 @@ def start(args):
 
         if 0 == len(args):
             try:
-                project = Project.get_latest()
+                project = Project.get_latest(session)
             except:
                 print("No prior project has been found. Please specify the project you wish to start.")
                 return False
