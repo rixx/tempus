@@ -33,22 +33,17 @@ def start(args):
         #either get running project, stop and output, or just … fail?
 
         if 0 == len(args):
-            try:
-                project = Project.get_latest(session)
-            except:
-                print("No prior project has been found. Please specify the project you wish to start.")
-                return False
-
+            project = Project.get_latest(session)
         elif 1 == len(args):
-            try:
-                project = Project.get_by_name(args[0], session)
-            except:
-                print("Sorry, couldn't find a project named " + args[0] + ".")
-                return False
+            project = Project.get_by_name(args[0], session)
 
-        project.start()
-        project.insert(session)
-        return True
+        if project:
+            project.start()
+            project.insert(session)
+            return True
+        else:
+            print("Could not find project.")
+            return False
 
     else:
         print_usage()

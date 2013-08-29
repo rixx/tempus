@@ -15,6 +15,9 @@ class Entry(Base):
 
     project = relationship("Project", back_populates="entries")
 
+    def __init__(self, start):
+        self.start = start
+
     @staticmethod
     def status(session):
         pass

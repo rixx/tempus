@@ -1,10 +1,12 @@
 __author__ = 'rixx'
 
 import logging
+import time
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import relationship
 from .base import Base
 from .tag import Tag
+from .entry import Entry
 
 
 class Project(Base):
@@ -40,24 +42,22 @@ class Project(Base):
             if len(tag) > 0:
                 new_tag = Tag.get_by_name(tag, session)
 
-                if (new_tag):
+                if new_tag:
                     self.tags.append(new_tag)
                 else:
                     print("Tag " + tag + " not found, skipping.")
 
-    def remove_tag(self, name, session):
-        pass
-
-    def add_tag(self, name, session):
-        pass
 
     def status(self, session):
         pass
 
     def start(self):
-        pass
+        entry = Entry(int(time.time()))
+        self.entries.append(entry)
 
     def stop(self):
+        entry = self.entries[-1]
+        entry.end = int(time.time())
         pass
 
     @staticmethod
