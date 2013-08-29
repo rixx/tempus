@@ -6,6 +6,7 @@ from sqlalchemy import Column, Integer, ForeignKey, Table
 from sqlalchemy.ext.declarative import declarative_base
 from configparser import ConfigParser
 import os
+import sys
 import logging
 
 
@@ -28,7 +29,7 @@ def get_session():
     except KeyError:
         print("Please define a connection string in your config file located at "+config_path+".")
         logger.error("Configuration file not found or incomplete. (" + config_path + "). Aborting.")
-        return False
+        sys.exit(-1)
 
     try:
         engine = sqlalchemy.create_engine(connection_string, echo=False)
@@ -39,7 +40,7 @@ def get_session():
         print("It seems the connection string given in "+config_path+" is invalid. Aborting.")
         logger.error("Could not connect to database using the connection string found in " + config_path + " (" + \
                        connection_string + "). Aborting.")
-        return False
+        sys.exit(-1)
 
     Session = sessionmaker(bind=engine)
     return Session()
