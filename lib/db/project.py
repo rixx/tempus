@@ -1,5 +1,6 @@
 __author__ = 'rixx'
 
+import logging
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import relationship
 from .base import Base
@@ -8,6 +9,7 @@ from .tag import Tag
 
 class Project(Base):
     __tablename__ = "projects"
+    logger = logging.getLogger(__name__)
     id = Column(Integer, primary_key=True)
     name = Column(String(30), unique=True)
 

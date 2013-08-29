@@ -1,10 +1,13 @@
 __author__ = 'rixx'
 
+import logging
 from sqlalchemy import Column, Integer, String
 from .base import Base
 
+
 class Tag(Base):
     __tablename__ = "tags"
+    logger = logging.getLogger(__name__)
     id = Column(Integer, primary_key=True)
     name = Column(String(20), unique=True)
 

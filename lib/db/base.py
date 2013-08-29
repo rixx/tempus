@@ -6,8 +6,10 @@ from sqlalchemy import Column, Integer, ForeignKey, Table
 from sqlalchemy.ext.declarative import declarative_base
 from configparser import ConfigParser
 import os
+import logging
 
 
+logger = logging.getLogger(__name__)
 config_path = os.path.expanduser('~') + '/.tempus/config'
 Base = declarative_base()
 
@@ -21,14 +23,23 @@ def get_session():
         config = ConfigParser()
         config.read(config_path)
         connection_string = config['General']['Connection']
-    except:
+        logger.debug("Successfully loaded config file at " + config_path + ".")
+
+    except KeyError:
         print("Please define a connection string in your config file located at "+config_path+".")
+        logger.error("Configuration file not found or incomplete. (" + config_path + "). Aborting.")
+        return False
 
     try:
         engine = sqlalchemy.create_engine(connection_string, echo=False)
         Base.metadata.create_all(engine)
-    except:
+        logger.debug("Successfully connected to database.")
+
+    except sqlalchemy.exc.ProgrammingError:
         print("It seems the connection string given in "+config_path+" is invalid. Aborting.")
+        logger.error("Could not connect to database using the connection string found in " + config_path + " (" + \
+                       connection_string + "). Aborting.")
+        return False
 
     Session = sessionmaker(bind=engine)
     return Session()

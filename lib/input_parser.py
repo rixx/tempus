@@ -16,7 +16,10 @@ from lib.db.entry import Entry
 from lib.db.project import Project
 from lib.db.tag import Tag
 from lib.db.base import get_session
+import logging
 
+
+logger = logging.getLogger(__name__)
 
 def print_usage():
     print(__doc__)
