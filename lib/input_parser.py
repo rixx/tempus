@@ -175,18 +175,34 @@ def rename(args):
     # handles `tempus rename project <project name> <new name>`
     if "project" == args[0] and 3 == len(args):
         session = get_session()
+
         project = Project.get_by_name(args[1], session)
-        test = Project.get_by_name(args[2], session)
-        project.name = args[2]
-        project.insert(session)
+        new_project = Project.get_by_name(args[2], session)
+
+        if project and not new_project:
+            project.name = args[2]
+            project.insert(session)
+            return True
+
+        else:
+            print("Can't find project or new name is already taken.")
+            return False
 
     # handles `tempus rename tag <tag name> <new name>`
     elif "tag" == args[0] and 3 == len(args):
         session = get_session()
+
         tag = Tag.get_by_name(args[1], session)
-        test = Tag.get_by_name(args[2], session)
-        tag.name = args[2]
-        tag.insert(session)
+        new_tag = Tag.get_by_name(args[2], session)
+
+        if tag and not new_tag:
+            tag.name = args[2]
+            tag.insert(session)
+            return True
+
+        else:
+            print("Can't find tag or new name is already taken.")
+            return False
 
     else:
         print_usage()
