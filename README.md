@@ -17,13 +17,9 @@ Tempus is CLI time tracking app. It requires Python 3, mysql-connector and SQLAl
 
 #Todo
 ```
-[ ] Consider changing `modify project [add|remove] tag` to `[tag|untag] project`
-[ ] dictionary: input : function(args)
 [ ] output out of orm
-[ ] divide orm into modules, put mapping into __init__.py
 [ ] Handle 0 existing tags on project creation
 [ ] Handle projects with no tags
-[ ] Exceptions, errors, handling
-[ ] user interaction module
+[ ] put loglevel in config, default to warning
 
 ```
