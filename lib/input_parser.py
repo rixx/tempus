@@ -82,11 +82,15 @@ def stop(args):
 def list(args):
      # handles `tempus list projects`
     if "projects" == args[0] and 1 == len(args):
-        Project.get_list(get_session())
+        list = Project.get_list(get_session())
+        list = "Project List: " + list
+        print(list)
 
     # handles `tempus list tags`
     elif "tags" == args[0] and 1 == len(args):
-        Tag.get_list(get_session())
+        list = Tag.get_list(get_session())
+        list = "Tag List: " + list
+        print(list)
 
     else:
         print_usage()

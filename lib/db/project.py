@@ -71,8 +71,13 @@ class Project(Base):
 
     @staticmethod
     def get_list(session):
+        query = session.query(Project.name).all()
+        return_string = ''
 
-        pass
+        for project in query:
+            return_string += project.name + " "
+
+        return return_string
 
     @staticmethod
     def get_by_name(name, session):
