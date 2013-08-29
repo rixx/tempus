@@ -52,22 +52,25 @@ class Project(Base):
         pass
 
     def start(self):
+        #todo: this is no good, starting several times has to be impossible. Also, stop other projects first!
         entry = Entry(int(time.time()))
         self.entries.append(entry)
 
     def stop(self):
         entry = self.entries[-1]
-        entry.end = int(time.time())
-        pass
+
+        if not entry.end:
+            entry.end = int(time.time())
+        else:
+            print("Project wasn't running!")
 
     @staticmethod
     def get_latest(session):
-        current_project = session.query(Project) #und so
-
-        if (current_project):
-            current_project.stop()
-        else:
-            print("Hm, it seems no project was running.")
+        try:
+            latest_project = session.query(Project).join(Entry).order_by(Entry.start.desc()).first()
+            return latest_project
+        except:
+            return None
 
     @staticmethod
     def get_list(session):

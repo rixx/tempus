@@ -74,7 +74,16 @@ def pause(args):
 
 def stop(args):
     if 0 == len(args):
-        Project.stop_running_project(get_session())
+        session = get_session()
+        project = Project.get_latest(session)
+
+        if project:
+            project.stop()
+            project.insert(session)
+            return True
+        else:
+            print("No project to be stopped.")
+            return False
     else:
         print_usage()
         return False
