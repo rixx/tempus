@@ -126,7 +126,7 @@ def tag(args):
             project.insert(session)
             return True
         else:
-            print("Couldn't find either project or tag.")
+            print("Couldn't find project or tag.")
             return False
 
     else:
@@ -138,11 +138,25 @@ def untag(args):
     if 2 == len(args):
         session = get_session()
         project = Project.get_by_name(args[0], session)
-        project.remove_tag(args[1])
-        project.insert(session)
+        tag = Tag.get_by_name(args[1], session)
+
+        if project and tag:
+
+            try:
+                project.tags.remove(tag)
+                project.insert(session)
+                return True
+            except:
+                print("Project " + project.name + " isn't tagged " + tag.name + ".")
+                return False
+
+        else:
+            print("Couldn't find project or tag.")
+            return False
 
     else:
         print_usage()
+        return False
 
 def rename(args):
     # handles `tempus rename project <project name> <new name>`
