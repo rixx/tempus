@@ -36,4 +36,8 @@ class Tag(Base):
 
     @staticmethod
     def get_by_name(name, session):
-        pass
+        try:
+            tag = session.query(Tag).filter(Tag.name == name).one()
+            return tag
+        except:
+            None

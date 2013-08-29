@@ -27,17 +27,23 @@ class Project(Base):
             print("Sorry, the new project could not be added … are you sure it doesn't exist already?")
 
     def init_tags(self, session):
-        tag_list = self.get_list(session)
+        tag_list = Tag.get_list(session)
 
         if tag_list:
-            print("The following tags exist: " + self.get_list(session))
+            print("The following tags exist: " + tag_list)
         else:
             print("No tags exist")
 
         user_tag_list = input("Please enter the tags for this project separated by commas: ").split(',')
 
         for tag in user_tag_list:
-            self.tags.append(session.query(Tag).filter(Tag.name == tag).one())
+            if len(tag) > 0:
+                new_tag = Tag.get_by_name(tag, session)
+
+                if (new_tag):
+                    self.tags.append(new_tag)
+                else:
+                    print("Tag " + tag + " not found, skipping.")
 
     def remove_tag(self, name, session):
         pass
