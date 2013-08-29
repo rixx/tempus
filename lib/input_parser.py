@@ -107,18 +107,50 @@ def list(args):
 
 def add(args):
     # handles `tempus add project <project name>`
+    #todo add check if project exists already *here*, aswell as inittags functionality!!
     if "project" == args[0] and 2 == len(args):
         session = get_session()
-        new_project = Project(args[1])
-        new_project.init_tags(session)
-        new_project.insert(session)
+        project = Project(args[1])
+        project.init_tags(session)
+        project.insert(session)
         return True
 
     # handles `tempus add tag <tag name>
     elif "tag" == args[0] and 2 == len(args):
-        new_tag = Tag(args[1])
-        new_tag.insert(get_session())
+        tag = Tag(args[1])
+        tag.insert(get_session())
         return True
+
+    else:
+        print_usage()
+        return False
+
+
+def remove(args):
+    if "project" == args[0] and 2 == len(args):
+        session = get_session()
+        project = Project.get_by_name(args[1], session)
+
+        if project:
+            session.delete(project)
+            session.commit()
+            return True
+        else:
+            print("Could not find project.")
+            return False
+
+    # handles `tempus add tag <tag name>
+    elif "tag" == args[0] and 2 == len(args):
+        session = get_session()
+        tag = Tag.get_by_name(args[1], session)
+
+        if tag:
+            session.delete(tag)
+            session.commit()
+            return True
+        else:
+            print("Could not find tag.")
+            return False
 
     else:
         print_usage()

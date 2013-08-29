@@ -11,7 +11,7 @@ logging.basicConfig(filename=logfile_path, level=logging.DEBUG, format="%(asctim
 logger = logging.getLogger("tempus")
 
 input_mapper = dict(start=start, pause=pause, stop=stop, add=add, list=list, tag=tag, untag=untag, rename=rename,
-                    status=status, clear=clear)
+                    status=status, clear=clear, remove=remove)
 
 if __name__ == "__main__":
 
