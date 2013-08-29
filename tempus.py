@@ -25,7 +25,12 @@ if __name__ == "__main__":
         #try:
             logger.debug("Invoking " + sys.argv[1] + ".")
             return_code = input_mapper[sys.argv[1]](sys.argv[2:])
-            logger.info("Finished with return code " + str(return_code))
+            logger.debug("Finished with return code " + str(return_code))
+
+            if return_code:
+                sys.exit(0)
+            else:
+                sys.exit(-1)
 
         #except KeyError:
         #    logger.debug("Error invoking " + sys.argv[1] + ".")

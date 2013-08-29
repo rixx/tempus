@@ -48,9 +48,11 @@ def start(args):
 
         project.start()
         project.insert(session)
+        return True
 
     else:
         print_usage()
+        return False
 
 
 def pause(args):
@@ -68,9 +70,11 @@ def pause(args):
         pause_project = Project.get_by_name("PAUSE", session)
         pause_project.start()
         pause_project.insert(session)
+        return True
 
     else:
         print_usage()
+        return False
 
 
 def stop(args):
@@ -78,6 +82,7 @@ def stop(args):
         Project.stop_running_project(get_session())
     else:
         print_usage()
+        return False
 
 
 def list(args):
@@ -86,15 +91,18 @@ def list(args):
         list = Project.get_list(get_session())
         list = "Project List: " + list
         print(list)
+        return True
 
     # handles `tempus list tags`
     elif "tags" == args[0] and 1 == len(args):
         list = Tag.get_list(get_session())
         list = "Tag List: " + list
         print(list)
+        return True
 
     else:
         print_usage()
+        return False
 
 
 def add(args):
@@ -104,14 +112,17 @@ def add(args):
         new_project = Project(args[1])
         new_project.init_tags(session)
         new_project.insert(session)
+        return True
 
     # handles `tempus add tag <tag name>
     elif "tag" == args[0] and 2 == len(args):
         new_tag = Tag(args[1])
         new_tag.insert(get_session())
+        return True
 
     else:
         print_usage()
+        return False
 
 
 def tag(args):
@@ -131,6 +142,7 @@ def tag(args):
 
     else:
         print_usage()
+        return False
 
 
 def untag(args):
@@ -158,6 +170,7 @@ def untag(args):
         print_usage()
         return False
 
+
 def rename(args):
     # handles `tempus rename project <project name> <new name>`
     if "project" == args[0] and 3 == len(args):
@@ -177,6 +190,7 @@ def rename(args):
 
     else:
         print_usage()
+        return False
 
 
 def status(args):
@@ -196,6 +210,7 @@ def status(args):
 
     else:
         print_usage()
+        return False
 
 
 def clear(args):
