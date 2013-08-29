@@ -81,4 +81,8 @@ class Project(Base):
 
     @staticmethod
     def get_by_name(name, session):
-        pass
+        try:
+            project = session.query(Project).filter(Project.name == name).one()
+            return project
+        except:
+            None

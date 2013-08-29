@@ -3,8 +3,9 @@ tempus usage:
    start {<project name>} - starts the timer. If no project name is given, the last running project is assumed (pause project not included)
    pause - pauses the timer and starts the default pause project
    stop - stops the timer
-   list [projects|tags] - givs a list of all projects or tags
+   list [projects|tags] - gives a list of all projects or tags
    add [project|tag] <name> - adds a project or tag
+   remove [project|tag] <name> - removes a project or tag
    [tag|untag] <project name> <tag name> - adds or removes a tag
    rename [project|tag] <old name> <new name> - renames a project or tag
    status {[project|tag] <name>} - either gives general or more specific statistics
@@ -118,8 +119,15 @@ def tag(args):
     if 2 == len(args):
         session = get_session()
         project = Project.get_by_name(args[0], session)
-        project.add_tag(args[1])
-        project.insert(session)
+        tag = Tag.get_by_name(args[1], session)
+
+        if tag and project:
+            project.tags.append(tag)
+            project.insert(session)
+            return True
+        else:
+            print("Couldn't find either project or tag.")
+            return False
 
     else:
         print_usage()
