@@ -32,12 +32,14 @@ def start(args):
 
         #either get running project, stop and output, or just … fail?
 
+
         if 0 == len(args):
             project = Project.get_latest(session)
         elif 1 == len(args):
             project = Project.get_by_name(args[0], session)
 
         if project:
+            stop()
             project.start()
             project.insert(session)
             return True
@@ -54,17 +56,17 @@ def pause(args):
     if 0 == len(args):
         session = get_session()
 
-        try:
-            project = Project.get_latest(session)
-            project.stop()
-            project.insert(session)
-        except:
-            print("There was no project to be paused, seems you were slacking off already ;)")
-            return False
+        if not stop():
+            print("No project stopped, seems as if you were slacking off already.")
 
-        pause_project = Project.get_by_name("PAUSE", session)
+        try:
+            pause_project = Project.get_by_name("PAUSE", session)
+        except:
+            pause_project = Project("PAUSE")
+
         pause_project.start()
         pause_project.insert(session)
+        print("Pause begins now.")
         return True
 
     else:
@@ -80,9 +82,9 @@ def stop(args):
         if project:
             project.stop()
             project.insert(session)
+            print("Project " + project.name + " has been stopped.")
             return True
         else:
-            print("No project to be stopped.")
             return False
     else:
         print_usage()
