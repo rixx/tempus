@@ -52,7 +52,6 @@ class Project(Base):
         pass
 
     def start(self):
-        #todo: this is no good, starting several times has to be impossible. Also, stop other projects first!
         entry = Entry(int(time.time()))
         self.entries.append(entry)
 

@@ -6,7 +6,7 @@ Tempus is CLI time tracking app. It requires Python 3, mysql-connector and SQLAl
 
 * `tempus start [project]` starts the timer. If no project is given, the last running project is assumed.
 * `tempus stop` stops the timer.
-* `tempus pause` stops the timer for the running project and starts the generic pause project. (to be implemented)
+* `tempus pause` stops the timer for the running project and starts the generic pause project.
 * `tempus list [projects|tags]` prints a list of all current projects or tags respectively.
 * `tempus add [project|tag] name` adds a new project or tag respectively. If a new project is added, the user is asked for tags he wants to add.
 * `tempus remove [all| [project|tag] name]` removes everything or a project/tag by name.
