@@ -259,17 +259,21 @@ def status(args):
         try:
             sum_seconds = Project.get_by_name(args[1], get_session()).status_total()
             print("You have worked on project " + args[1] + " for " + str(int(sum_seconds/60)) + " minutes.")
+            return True
         except AttributeError:
             print("Could not find project.")
+            return False
 
     # handles `tempus status tag <tag name>`
     elif "tag" == args[0] and 2 == len(args):
         try:
             sum_seconds = Tag.get_by_name(args[1], get_session()).status_total()
             print("You have spent " + str(int(sum_seconds/60)) + " minutes on projects tagged \"" + args[1] + "\".")
+            return True
 
         except AttributeError:
             print("Could not find tag.")
+            return False
 
     else:
         print_usage()
