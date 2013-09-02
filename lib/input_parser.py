@@ -59,9 +59,9 @@ def pause(args):
         if not stop([]):
             print("No project stopped, seems as if you were slacking off already.")
 
-        try:
-            pause_project = Project.get_by_name("PAUSE", session)
-        except:
+        pause_project = Project.get_by_name("PAUSE", session)
+
+        if pause_project is None:
             pause_project = Project("PAUSE")
 
         pause_project.start()
