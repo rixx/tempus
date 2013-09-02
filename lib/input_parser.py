@@ -22,6 +22,7 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+
 def print_usage():
     print(__doc__)
 
@@ -30,12 +31,9 @@ def start(args):
     if len(args) < 2:
         session = get_session()
 
-        #either get running project, stop and output, or just … fail?
-
-
         if 0 == len(args):
             project = Project.get_latest_project(session)
-        elif 1 == len(args):
+        else:
             project = Project.get_by_name(args[0], session)
 
         if project:

@@ -15,8 +15,8 @@ config_path = os.path.expanduser('~') + '/.tempus/config'
 Base = declarative_base()
 
 #for mapping projects:tags as m:n relation
-Base.projects_tags = Table('projects_tags', Base.metadata, \
-                           Column('projects_id', Integer, ForeignKey('projects.id')), \
+Base.projects_tags = Table('projects_tags', Base.metadata,
+                           Column('projects_id', Integer, ForeignKey('projects.id')),
                            Column('tags_id', Integer, ForeignKey('tags.id')))
 
 
