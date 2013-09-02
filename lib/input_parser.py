@@ -39,7 +39,7 @@ def start(args):
             project = Project.get_by_name(args[0], session)
 
         if project:
-            stop()
+            stop([])
             project.start()
             project.insert(session)
             return True
@@ -56,7 +56,7 @@ def pause(args):
     if 0 == len(args):
         session = get_session()
 
-        if not stop():
+        if not stop([]):
             print("No project stopped, seems as if you were slacking off already.")
 
         try:
