@@ -18,6 +18,12 @@ class Entry(Base):
     def __init__(self, start):
         self.start = start
 
+    def length(self):
+        try:
+            return self.end - self.start
+        except:
+            return None
+
     @staticmethod
     def status(session):
         pass

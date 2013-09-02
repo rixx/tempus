@@ -255,13 +255,11 @@ def status(args):
 
     # handles `tempus status project <project name>`
     elif "project" == args[0] and 2 == len(args):
-        project = Project(args[1])
-        project.status(get_session())
+        Project.get_by_name(args[1], get_session()).status()
 
     # handles `tempus status tag <tag name>`
     elif "tag" == args[0] and 2 == len(args):
-        tag = Tag(args[1])
-        tag.status(get_session())
+        Tag.get_by_name(args[1], get_session()).status()
 
     else:
         print_usage()
