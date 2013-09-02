@@ -77,7 +77,8 @@ class Project(Base):
         return_string = ''
 
         for project in query:
-            return_string += project.name + " "
+            if project.name != "PAUSE":
+                return_string += project.name + " "
 
         return return_string
 
