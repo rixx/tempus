@@ -2,6 +2,7 @@ __author__ = 'rixx'
 
 import logging
 import time
+import sqlalchemy
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import relationship
 from .base import Base
@@ -25,7 +26,7 @@ class Project(Base):
         try:
             session.add(self)
             session.commit()
-        except:
+        except sqlalchemy.exc.IntegrityError:
             print("Sorry, the new project could not be added … are you sure it doesn't exist already?")
 
     def init_tags(self, session):
@@ -57,7 +58,6 @@ class Project(Base):
                 sum_seconds += (time.time() - entry.start)
 
         return sum_seconds
-
 
     def start(self):
         entry = Entry(int(time.time()))
@@ -103,5 +103,5 @@ class Project(Base):
         try:
             project = session.query(Project).filter(Project.name == name).one()
             return project
-        except:
-            None
+        except sqlalchemy.orm.exc.NoResultFound:
+            return None

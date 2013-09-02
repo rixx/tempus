@@ -1,6 +1,7 @@
 __author__ = 'rixx'
 
 import logging
+import sqlalchemy
 from sqlalchemy import Column, Integer, String
 from .base import Base
 
@@ -18,7 +19,7 @@ class Tag(Base):
         try:
             session.add(self)
             session.commit()
-        except:
+        except sqlalchemy.exc.IntegrityError:
             print("Sorry, the new tag could not be added … are you sure it doesn't exist already?")
 
     def status_total(self):
@@ -44,5 +45,5 @@ class Tag(Base):
         try:
             tag = session.query(Tag).filter(Tag.name == name).one()
             return tag
-        except:
+        except sqlalchemy.orm.exc.NoResultFound:
             return None

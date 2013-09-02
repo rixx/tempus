@@ -22,7 +22,7 @@ if __name__ == "__main__":
 
     # otherwise try to call the appropriate function. Failing
     else:
-        #try:
+        try:
             logger.debug("Invoking " + sys.argv[1] + ".")
             return_code = input_mapper[sys.argv[1]](sys.argv[2:])
             logger.debug("Finished with return code " + str(return_code))
@@ -32,7 +32,7 @@ if __name__ == "__main__":
             else:
                 sys.exit(-1)
 
-        #except KeyError:
-        #    logger.debug("Error invoking " + sys.argv[1] + ".")
-        #    print_usage()
-        #    sys.exit(-1)
+        except KeyError:
+            logger.debug("Error invoking " + sys.argv[1] + ".")
+            print_usage()
+            sys.exit(-1)

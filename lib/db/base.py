@@ -16,8 +16,9 @@ Base = declarative_base()
 
 #for mapping projects:tags as m:n relation
 Base.projects_tags = Table('projects_tags', Base.metadata, \
-                           Column('projects_id', Integer, ForeignKey('projects.id')),\
+                           Column('projects_id', Integer, ForeignKey('projects.id')), \
                            Column('tags_id', Integer, ForeignKey('tags.id')))
+
 
 def get_session():
     try:
@@ -27,7 +28,7 @@ def get_session():
         logger.debug("Successfully loaded config file at " + config_path + ".")
 
     except KeyError:
-        print("Please define a connection string in your config file located at "+config_path+".")
+        print("Please define a connection string in your config file located at " + config_path + ".")
         logger.error("Configuration file not found or incomplete. (" + config_path + "). Aborting.")
         sys.exit(-1)
 
@@ -37,9 +38,9 @@ def get_session():
         logger.debug("Successfully connected to database.")
 
     except sqlalchemy.exc.ProgrammingError:
-        print("It seems the connection string given in "+config_path+" is invalid. Aborting.")
+        print("It seems the connection string given in " + config_path + " is invalid. Aborting.")
         logger.error("Could not connect to database using the connection string found in " + config_path + " (" + \
-                       connection_string + "). Aborting.")
+                     connection_string + "). Aborting.")
         sys.exit(-1)
 
     Session = sessionmaker(bind=engine)

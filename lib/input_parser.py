@@ -197,7 +197,8 @@ def untag(args):
                 project.tags.remove(tag)
                 project.insert(session)
                 return True
-            except:
+            except Exception as e:
+                print(e)
                 print("Project " + project.name + " isn't tagged " + tag.name + ".")
                 return False
 
@@ -258,7 +259,7 @@ def status(args):
         try:
             sum_seconds = Project.get_by_name(args[1], get_session()).status_total()
             print("You have worked on project " + args[1] + " for " + str(int(sum_seconds/60)) + " minutes.")
-        except TypeError:
+        except AttributeError:
             print("Could not find project.")
 
     # handles `tempus status tag <tag name>`
@@ -267,7 +268,7 @@ def status(args):
             sum_seconds = Tag.get_by_name(args[1], get_session()).status_total()
             print("You have spent " + str(int(sum_seconds/60)) + " minutes on projects tagged \"" + args[1] + "\".")
 
-        except TypeError:
+        except AttributeError:
             print("Could not find tag.")
 
     else:

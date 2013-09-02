@@ -5,6 +5,7 @@ from sqlalchemy.orm import relationship
 from .base import Base
 import logging
 
+
 class Entry(Base):
     __tablename__ = "entries"
     id = Column(Integer, primary_key=True)
@@ -21,7 +22,7 @@ class Entry(Base):
     def length(self):
         try:
             return self.end - self.start
-        except:
+        except TypeError:
             return None
 
     @staticmethod
