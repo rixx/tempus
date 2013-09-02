@@ -55,6 +55,7 @@ class Project(Base):
                 sum_seconds += entry.length()
             except TypeError:
                 print("The project is running at the moment.")
+                sum_seconds += (time.time() - entry.start)
 
         print("You have worked on the project " + self.name + " for " + str(int(sum_seconds/60)) + " minutes.")
 
