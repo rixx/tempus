@@ -34,7 +34,7 @@ def start(args):
 
 
         if 0 == len(args):
-            project = Project.get_latest(session)
+            project = Project.get_latest_project(session)
         elif 1 == len(args):
             project = Project.get_by_name(args[0], session)
 
@@ -42,6 +42,7 @@ def start(args):
             stop([])
             project.start()
             project.insert(session)
+            print("Project " + project.name + " now running.")
             return True
         else:
             print("Could not find project.")

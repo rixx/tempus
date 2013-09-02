@@ -72,6 +72,14 @@ class Project(Base):
             return None
 
     @staticmethod
+    def get_latest_project(session):
+        try:
+            latest_project = session.query(Project).join(Entry).order_by(Entry.start.desc()).filter(Project.name != "PAUSE").first()
+            return latest_project
+        except:
+            return None
+
+    @staticmethod
     def get_list(session):
         query = session.query(Project.name).all()
         return_string = ''
