@@ -47,17 +47,17 @@ class Project(Base):
                 else:
                     print("Tag " + tag + " not found, skipping.")
 
-    def status(self):
+    def status_total(self):
         sum_seconds = 0
 
         for entry in self.entries:
             try:
                 sum_seconds += entry.length()
             except TypeError:
-                print("The project is running at the moment.")
                 sum_seconds += (time.time() - entry.start)
 
-        print("You have worked on the project " + self.name + " for " + str(int(sum_seconds/60)) + " minutes.")
+        return sum_seconds
+
 
     def start(self):
         entry = Entry(int(time.time()))

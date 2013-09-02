@@ -21,8 +21,13 @@ class Tag(Base):
         except:
             print("Sorry, the new tag could not be added … are you sure it doesn't exist already?")
 
-    def status(self, session):
-        pass
+    def status_total(self):
+        sum_seconds = 0
+
+        for project in self.projects:
+            sum_seconds += project.status_total()
+
+        return sum_seconds
 
     @staticmethod
     def get_list(session):
@@ -40,4 +45,4 @@ class Tag(Base):
             tag = session.query(Tag).filter(Tag.name == name).one()
             return tag
         except:
-            None
+            return None

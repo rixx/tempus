@@ -255,11 +255,20 @@ def status(args):
 
     # handles `tempus status project <project name>`
     elif "project" == args[0] and 2 == len(args):
-        Project.get_by_name(args[1], get_session()).status()
+        try:
+            sum_seconds = Project.get_by_name(args[1], get_session()).status_total()
+            print("You have worked on project " + args[1] + " for " + str(int(sum_seconds/60)) + " minutes.")
+        except TypeError:
+            print("Could not find project.")
 
     # handles `tempus status tag <tag name>`
     elif "tag" == args[0] and 2 == len(args):
-        Tag.get_by_name(args[1], get_session()).status()
+        try:
+            sum_seconds = Tag.get_by_name(args[1], get_session()).status_total()
+            print("You have spent " + str(int(sum_seconds/60)) + " minutes on projects tagged \"" + args[1] + "\".")
+
+        except TypeError:
+            print("Could not find tag.")
 
     else:
         print_usage()
