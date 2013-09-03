@@ -1,7 +1,7 @@
 __author__ = 'rixx'
 
 import logging
-import time
+import datetime
 import sqlalchemy
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import relationship
@@ -52,22 +52,32 @@ class Project(Base):
         sum_seconds = 0
 
         for entry in self.entries:
-            try:
-                sum_seconds += entry.length()
-            except TypeError:
-                sum_seconds += (time.time() - entry.start)
+            sum_seconds += entry.length()
+
+        return sum_seconds
+
+    def status_today(self):
+        sum_seconds = 0
+        day_start = int(datetime.date.today().strftime("%s"))
+
+        for entry in self.entries:
+            if entry.end > day_start:
+                if entry.start > day_start:
+                    sum_seconds += entry.length()
+                else:
+                    sum_seconds += entry.end - day_start
 
         return sum_seconds
 
     def start(self):
-        entry = Entry(int(time.time()))
+        entry = Entry()
         self.entries.append(entry)
 
     def stop(self):
         entry = self.entries[-1]
 
         if not entry.end:
-            entry.end = int(time.time())
+            entry.stop()
         else:
             print("Project wasn't running!")
 
