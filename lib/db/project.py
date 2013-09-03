@@ -61,7 +61,7 @@ class Project(Base):
         day_start = int(datetime.date.today().strftime("%s"))
 
         for entry in self.entries:
-            if entry.end > day_start:
+            if not entry.end or entry.end > day_start:
                 if entry.start > day_start:
                     sum_seconds += entry.length()
                 else:
