@@ -1,13 +1,13 @@
 __author__ = 'rixx'
 
-import sqlalchemy
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy import Column, Integer, ForeignKey, Table
-from sqlalchemy.ext.declarative import declarative_base
-from configparser import ConfigParser
 import os
 import sys
 import logging
+from configparser import ConfigParser
+import sqlalchemy
+from sqlalchemy import Column, Integer, ForeignKey, Table
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.ext.declarative import declarative_base
 
 
 logger = logging.getLogger(__name__)

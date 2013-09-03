@@ -1,10 +1,10 @@
 __author__ = 'rixx'
 
 import time
+import logging
 from sqlalchemy import Column, Integer, ForeignKey
 from sqlalchemy.orm import relationship
 from .base import Base
-import logging
 
 
 class Entry(Base):

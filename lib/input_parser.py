@@ -13,11 +13,11 @@ tempus usage:
 """
 __author__ = 'rixx'
 
+import logging
 from lib.db.entry import Entry
 from lib.db.project import Project
 from lib.db.tag import Tag
 from lib.db.base import get_session
-import logging
 
 
 logger = logging.getLogger(__name__)
@@ -286,6 +286,7 @@ def status(args):
 
 def clear(args):
     pass
+
 
 def output_seconds(seconds):
 
