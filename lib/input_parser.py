@@ -258,8 +258,8 @@ def status(args):
             project = Project.get_by_name(args[1], get_session())
             total = project.status_total()
             today = project.status_today()
-            print("Today: " + str(int(today/60)) + " minutes")
-            print("Total: " + str(int(total/60)) + " minutes")
+            print("Today: " + output_seconds(today))
+            print("Total: " + output_seconds(total))
             return True
         except AttributeError:
             print("Could not find project.")
@@ -271,8 +271,8 @@ def status(args):
             tag = Tag.get_by_name(args[1], get_session())
             total = tag.status_total()
             today = tag.status_today()
-            print("Today: " + str(int(today/60)) + " minutes")
-            print("Total: " + str(int(total/60)) + " minutes")
+            print("Today: " + output_seconds(today))
+            print("Total: " + output_seconds(total))
             return True
 
         except AttributeError:
@@ -286,3 +286,23 @@ def status(args):
 
 def clear(args):
     pass
+
+def output_seconds(seconds):
+
+    minutes = int(seconds/60)
+    output = ""
+
+    if minutes > 60 * 24:
+        days = int(minutes / (60 * 24))
+        minutes -= days * 60 * 24
+        output += str(days) + " days, "
+
+    if minutes > 60:
+        hours = int(minutes / 60)
+        minutes -= hours * 60
+        output += str(hours) + " hours, "
+
+    output += str(minutes) + " minutes"
+    return output
+
+
