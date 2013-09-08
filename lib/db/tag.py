@@ -38,6 +38,14 @@ class Tag(Base):
 
         return sum_seconds
 
+    def status_this_week(self):
+        sum_seconds = 0
+
+        for project in self.projects:
+            sum_seconds += project.status_this_week()
+
+        return sum_seconds
+
     @staticmethod
     def get_list(session):
         query = session.query(Tag.name).all()

@@ -257,8 +257,10 @@ def status(args):
         try:
             project = Project.get_by_name(args[1], get_session())
             total = project.status_total()
+            week = project.status_this_week()
             today = project.status_today()
             print("Today: " + output_seconds(today))
+            print("This week: " + output_seconds(week))
             print("Total: " + output_seconds(total))
             return True
         except AttributeError:
@@ -270,8 +272,10 @@ def status(args):
         try:
             tag = Tag.get_by_name(args[1], get_session())
             total = tag.status_total()
+            week = tag.status_this_week()
             today = tag.status_today()
             print("Today: " + output_seconds(today))
+            print("This week: " + output_seconds(week))
             print("Total: " + output_seconds(total))
             return True
 

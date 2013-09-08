@@ -69,6 +69,21 @@ class Project(Base):
 
         return sum_seconds
 
+    def status_this_week(self):
+        sum_seconds = 0
+        today = datetime.date.today()
+        day_start = int((today - datetime.timedelta(days=today.weekday())).strftime("%s"))
+
+        for entry in self.entries:
+            if not entry.end or entry.end > day_start:
+                if entry.start > day_start:
+                    sum_seconds += entry.length()
+                else:
+                    sum_seconds += entry.end - day_start
+
+        return sum_seconds
+
+
     def start(self):
         entry = Entry()
         self.entries.append(entry)
