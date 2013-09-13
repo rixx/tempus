@@ -297,11 +297,11 @@ def output_seconds(seconds):
     minutes = int(seconds/60)
     output = ""
 
-    if minutes > 60 * 24:
-        days = int(minutes / (60 * 24))
-        minutes -= days * 60 * 24
-        output += str(days) + " days, "
-
+#    if minutes > 60 * 24:
+#        days = int(minutes / (60 * 24))
+#        minutes -= days * 60 * 24
+#        output += str(days) + " days, "
+#
     if minutes > 60:
         hours = int(minutes / 60)
         minutes -= hours * 60
