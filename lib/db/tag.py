@@ -7,8 +7,10 @@ from .base import Base
 
 
 class Tag(Base):
+    """ represent tag table """
     __tablename__ = "tags"
     logger = logging.getLogger(__name__)
+
     id = Column(Integer, primary_key=True)
     name = Column(String(20), unique=True)
 
@@ -16,6 +18,7 @@ class Tag(Base):
         self.name = name
 
     def insert(self,session):
+        """ commit to database """
         try:
             session.add(self)
             session.commit()
@@ -23,6 +26,7 @@ class Tag(Base):
             print("Sorry, the new tag could not be added … are you sure it doesn't exist already?")
 
     def status_total(self):
+        """ add up total status of every associated project """
         sum_seconds = 0
 
         for project in self.projects:
@@ -31,6 +35,7 @@ class Tag(Base):
         return sum_seconds
 
     def status_today(self):
+        """ add up today's status of every associated project"""
         sum_seconds = 0
 
         for project in self.projects:
@@ -39,6 +44,7 @@ class Tag(Base):
         return sum_seconds
 
     def status_this_week(self):
+        """ add up this week's status of every associated project """
         sum_seconds = 0
 
         for project in self.projects:
@@ -48,6 +54,7 @@ class Tag(Base):
 
     @staticmethod
     def get_list(session):
+        """ returns a string containing all tags """
         query = session.query(Tag.name).all()
         return_string = ''
 
@@ -58,6 +65,7 @@ class Tag(Base):
 
     @staticmethod
     def get_by_name(name, session):
+        """ returns a tag by a given name"""
         try:
             tag = session.query(Tag).filter(Tag.name == name).one()
             return tag

@@ -20,7 +20,7 @@ if __name__ == "__main__":
         print_usage()
         sys.exit(0)
 
-    # otherwise try to call the appropriate function. Failing
+    # otherwise try to call the appropriate function. Failing print usage and exit.
     else:
         try:
             logger.debug("Invoking " + sys.argv[1] + ".")

@@ -21,6 +21,7 @@ Base.projects_tags = Table('projects_tags', Base.metadata,
 
 
 def get_session():
+    """ read the config file, connect to the given database and return a session with that database"""
     try:
         config = ConfigParser()
         config.read(config_path)

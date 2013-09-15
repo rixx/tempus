@@ -1,6 +1,6 @@
 #About
 
-Tempus is CLI time tracking app. It requires Python 3, mysql-connector and SQLAlchemy.
+Tempus is CLI time tracking app. It requires Python 3 and SQLAlchemy aswell as some database and corresponding Python 3 drivers (mysql-connector for MySQL).
 
 #Usage
 
@@ -17,10 +17,10 @@ Tempus is CLI time tracking app. It requires Python 3, mysql-connector and SQLAl
 
 #Todo
 ```
-[ ] output out of orm
 [ ] put loglevel in config, default to warning
 [ ] moar logging
 [ ] sys.exit(-1) in orm -> throuw CriticalError (for others: UserInputError)
 [ ] move Project.init_tags() logic to input_parser
+[ ] set down milestones vor 0.2 (e.g. server-client version, flask integration, Android client)
 
 ```

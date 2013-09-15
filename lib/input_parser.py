@@ -28,6 +28,7 @@ def print_usage():
 
 
 def start(args):
+    """ handles `tempus start` """
     if len(args) < 2:
         session = get_session()
 
@@ -52,6 +53,7 @@ def start(args):
 
 
 def pause(args):
+    """ handles `tempus pause` """
     if 0 == len(args):
         session = get_session()
 
@@ -74,6 +76,7 @@ def pause(args):
 
 
 def stop(args):
+    """ handles `tempus stop` """
     if 0 == len(args):
         session = get_session()
         project = Project.get_latest(session)
@@ -91,6 +94,7 @@ def stop(args):
 
 
 def list(args):
+    """ handles `tempus list` """
      # handles `tempus list projects`
     if "projects" == args[0] and 1 == len(args):
         list = Project.get_list(get_session())
@@ -111,7 +115,7 @@ def list(args):
 
 
 def add(args):
-    # handles `tempus add project <project name>`
+    """ handles `tempus add project <project name>` """
     #todo add check if project exists already *here*, aswell as inittags functionality!!
     if "project" == args[0] and 2 == len(args):
         session = get_session()
@@ -132,6 +136,7 @@ def add(args):
 
 
 def remove(args):
+    """ handles `tempus remove` """
     if "project" == args[0] and 2 == len(args):
         session = get_session()
         project = Project.get_by_name(args[1], session)
@@ -144,7 +149,6 @@ def remove(args):
             print("Could not find project.")
             return False
 
-    # handles `tempus add tag <tag name>
     elif "tag" == args[0] and 2 == len(args):
         session = get_session()
         tag = Tag.get_by_name(args[1], session)
@@ -163,7 +167,7 @@ def remove(args):
 
 
 def tag(args):
-    # handles `tempus tag <project name> <tag name>`
+    """ handles `tempus tag <project name> <tag name>` """
     if 2 == len(args):
         session = get_session()
         project = Project.get_by_name(args[0], session)
@@ -183,7 +187,7 @@ def tag(args):
 
 
 def untag(args):
-    # handles `tempus untag <project name> <tag name>`
+    """ handles `tempus untag <project name> <tag name>` """
     if 2 == len(args):
         session = get_session()
         project = Project.get_by_name(args[0], session)
@@ -210,6 +214,7 @@ def untag(args):
 
 
 def rename(args):
+    """handles `tempus rename` """
     # handles `tempus rename project <project name> <new name>`
     if "project" == args[0] and 3 == len(args):
         session = get_session()
@@ -248,7 +253,7 @@ def rename(args):
 
 
 def status(args):
-    # handles `tempus status`
+    """ handles `tempus status` """
     if 0 == len(args):
         Entry.status(get_session())
 
@@ -293,15 +298,10 @@ def clear(args):
 
 
 def output_seconds(seconds):
-
+    """ formats output given in seconds to a human-readable output string """
     minutes = int(seconds/60)
     output = ""
 
-#    if minutes > 60 * 24:
-#        days = int(minutes / (60 * 24))
-#        minutes -= days * 60 * 24
-#        output += str(days) + " days, "
-#
     if minutes > 60:
         hours = int(minutes / 60)
         minutes -= hours * 60
