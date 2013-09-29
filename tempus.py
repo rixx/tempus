@@ -1,4 +1,8 @@
 #!/usr/bin/env python
+""" this module starts the tempus time logging app
+    by giving command line arguments to the input_parser
+    module
+"""
 
 import os
 import sys
@@ -10,7 +14,7 @@ logfile_path = os.path.expanduser('~') + '/.tempus/log'
 logging.basicConfig(filename=logfile_path, level=logging.DEBUG, format="%(asctime)s - %(levelname)s: %(message)s")
 logger = logging.getLogger("tempus")
 
-input_mapper = dict(start=start, pause=pause, stop=stop, add=add, list=list, tag=tag, untag=untag, rename=rename,
+input_mapper = dict(start=start, pause=pause, stop=stop, add=add, list=tempus_list, tag=tag, untag=untag, rename=rename,
                     status=status, clear=clear, remove=remove)
 
 if __name__ == "__main__":

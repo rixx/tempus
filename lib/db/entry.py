@@ -1,3 +1,4 @@
+""" this module provides the sqlalchemy Entry class """
 __author__ = 'rixx'
 
 import time
@@ -8,7 +9,7 @@ from .base import Base
 
 
 class Entry(Base):
-    """ Represent the entries table """
+    """ Represents the entries table """
     __tablename__ = "entries"
     logger = logging.getLogger(__name__)
 
@@ -33,3 +34,8 @@ class Entry(Base):
     def stop(self):
         """ stop and assume current time as end """
         self.end = int(time.time())
+
+    @classmethod
+    def status(cls, session):
+        """ give a general status report """
+        pass

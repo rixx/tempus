@@ -1,3 +1,7 @@
+""" this module provides the Base data relevant to the remaining
+    sqlalchemy modules in this package aswell as the get_session()
+    method returning a valid session with the configured db
+"""
 __author__ = 'rixx'
 
 import os
@@ -44,5 +48,5 @@ def get_session():
                      connection_string + "). Aborting.")
         sys.exit(-1)
 
-    Session = sessionmaker(bind=engine)
-    return Session()
+    session = sessionmaker(bind=engine)
+    return session()

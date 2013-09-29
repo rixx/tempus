@@ -22,8 +22,8 @@ from lib.db.base import get_session
 
 logger = logging.getLogger(__name__)
 
-
 def print_usage():
+    """ prints the module docstring """
     print(__doc__)
 
 
@@ -93,20 +93,20 @@ def stop(args):
         return False
 
 
-def list(args):
+def tempus_list(args):
     """ handles `tempus list` """
      # handles `tempus list projects`
     if "projects" == args[0] and 1 == len(args):
-        list = Project.get_list(get_session())
-        list = "Project List: " + list
-        print(list)
+        project_list = Project.get_list(get_session())
+        project_list = "Project List: " + project_list
+        print(project_list)
         return True
 
     # handles `tempus list tags`
     elif "tags" == args[0] and 1 == len(args):
-        list = Tag.get_list(get_session())
-        list = "Tag List: " + list
-        print(list)
+        tag_list = Tag.get_list(get_session())
+        tag_list = "Tag List: " + tag_list
+        print(tag_list)
         return True
 
     else:
@@ -126,8 +126,8 @@ def add(args):
 
     # handles `tempus add tag <tag name>
     elif "tag" == args[0] and 2 == len(args):
-        tag = Tag(args[1])
-        tag.insert(get_session())
+        new_tag = Tag(args[1])
+        new_tag.insert(get_session())
         return True
 
     else:
@@ -151,10 +151,10 @@ def remove(args):
 
     elif "tag" == args[0] and 2 == len(args):
         session = get_session()
-        tag = Tag.get_by_name(args[1], session)
+        rm_tag = Tag.get_by_name(args[1], session)
 
-        if tag:
-            session.delete(tag)
+        if rm_tag:
+            session.delete(rm_tag)
             session.commit()
             return True
         else:
@@ -171,10 +171,10 @@ def tag(args):
     if 2 == len(args):
         session = get_session()
         project = Project.get_by_name(args[0], session)
-        tag = Tag.get_by_name(args[1], session)
+        tag_tag = Tag.get_by_name(args[1], session)
 
-        if tag and project:
-            project.tags.append(tag)
+        if tag_tag and project:
+            project.tags.append(tag_tag)
             project.insert(session)
             return True
         else:
@@ -191,17 +191,17 @@ def untag(args):
     if 2 == len(args):
         session = get_session()
         project = Project.get_by_name(args[0], session)
-        tag = Tag.get_by_name(args[1], session)
+        tagged_tag = Tag.get_by_name(args[1], session)
 
-        if project and tag:
+        if project and tagged_tag:
 
             try:
-                project.tags.remove(tag)
+                project.tags.remove(tagged_tag)
                 project.insert(session)
                 return True
-            except Exception as e:
-                print(e)
-                print("Project " + project.name + " isn't tagged " + tag.name + ".")
+            except Exception as exception:
+                print(exception)
+                print("Project " + project.name + " isn't tagged " + tagged_tag.name + ".")
                 return False
 
         else:
@@ -235,12 +235,12 @@ def rename(args):
     elif "tag" == args[0] and 3 == len(args):
         session = get_session()
 
-        tag = Tag.get_by_name(args[1], session)
+        old_tag = Tag.get_by_name(args[1], session)
         new_tag = Tag.get_by_name(args[2], session)
 
-        if tag and not new_tag:
-            tag.name = args[2]
-            tag.insert(session)
+        if old_tag and not new_tag:
+            old_tag.name = args[2]
+            old_tag.insert(session)
             return True
 
         else:
@@ -275,10 +275,10 @@ def status(args):
     # handles `tempus status tag <tag name>`
     elif "tag" == args[0] and 2 == len(args):
         try:
-            tag = Tag.get_by_name(args[1], get_session())
-            total = tag.status_total()
-            week = tag.status_this_week()
-            today = tag.status_today()
+            status_tag = Tag.get_by_name(args[1], get_session())
+            total = status_tag.status_total()
+            week = status_tag.status_this_week()
+            today = status_tag.status_today()
             print("Today: " + output_seconds(today))
             print("This week: " + output_seconds(week))
             print("Total: " + output_seconds(total))
@@ -293,7 +293,8 @@ def status(args):
         return False
 
 
-def clear(args):
+def clear():
+    """ deletes all data from the database """
     pass
 
 

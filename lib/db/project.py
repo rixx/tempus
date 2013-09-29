@@ -1,3 +1,4 @@
+""" this module provides the sqlalchemy Project class"""
 __author__ = 'rixx'
 
 import logging

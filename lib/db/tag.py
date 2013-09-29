@@ -1,3 +1,4 @@
+""" provides the sqlalchemy Tag class """
 __author__ = 'rixx'
 
 import logging
@@ -13,11 +14,12 @@ class Tag(Base):
 
     id = Column(Integer, primary_key=True)
     name = Column(String(20), unique=True)
+    projects = []
 
-    def __init__(self,name):
+    def __init__(self, name):
         self.name = name
 
-    def insert(self,session):
+    def insert(self, session):
         """ commit to database """
         try:
             session.add(self)
