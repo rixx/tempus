@@ -4,15 +4,15 @@ __author__ = 'rixx'
 import logging
 import sqlalchemy
 from sqlalchemy import Column, Integer, String
-from .base import Base
+from .base import BASE
 
 
-class Tag(Base):
+class Tag(BASE):
     """ represent tag table """
     __tablename__ = "tags"
     logger = logging.getLogger(__name__)
 
-    id = Column(Integer, primary_key=True)
+    tag_id = Column(Integer, primary_key=True)
     name = Column(String(20), unique=True)
     projects = []
 

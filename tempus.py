@@ -11,10 +11,12 @@ from lib.input_parser import *
 
 
 logfile_path = os.path.expanduser('~') + '/.tempus/log'
-logging.basicConfig(filename=logfile_path, level=logging.DEBUG, format="%(asctime)s - %(levelname)s: %(message)s")
+logging.basicConfig(filename=logfile_path, level=logging.DEBUG, \
+    format="%(asctime)s - %(levelname)s: %(message)s")
 logger = logging.getLogger("tempus")
 
-input_mapper = dict(start=start, pause=pause, stop=stop, add=add, list=tempus_list, tag=tag, untag=untag, rename=rename,
+input_mapper = dict(start=start, pause=pause, stop=stop, add=add, 
+                    list=tempus_list, tag=tag, untag=untag, rename=rename,
                     status=status, clear=clear, remove=remove)
 
 if __name__ == "__main__":

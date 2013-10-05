@@ -6,20 +6,20 @@ import datetime
 import sqlalchemy
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import relationship
-from .base import Base
+from .base import BASE
 from .tag import Tag
 from .entry import Entry
 
 
-class Project(Base):
+class Project(BASE):
     """ represent projects table """
     __tablename__ = "projects"
     logger = logging.getLogger(__name__)
 
-    id = Column(Integer, primary_key=True)
+    project_id = Column(Integer, primary_key=True)
     name = Column(String(30), unique=True)
 
-    tags = relationship("Tag", secondary=Base.projects_tags, backref="projects")
+    tags = relationship("Tag", secondary=BASE.projects_tags, backref="projects")
     entries = relationship("Entry", back_populates="project")
 
     def __init__(self, name):

@@ -1,4 +1,4 @@
-""" this module provides the Base data relevant to the remaining
+""" this module provides the BASE data relevant to the remaining
     sqlalchemy modules in this package aswell as the get_session()
     method returning a valid session with the configured db
 """
@@ -14,37 +14,37 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 
 
-logger = logging.getLogger(__name__)
-config_path = os.path.expanduser('~') + '/.tempus/config'
-Base = declarative_base()
+LOGGER = logging.getLogger(__name__)
+CONFIG_PATH = os.path.expanduser('~') + '/.tempus/config'
+BASE = declarative_base()
 
 #for mapping projects:tags as m:n relation
-Base.projects_tags = Table('projects_tags', Base.metadata,
-                           Column('projects_id', Integer, ForeignKey('projects.id')),
-                           Column('tags_id', Integer, ForeignKey('tags.id')))
+BASE.projects_tags = Table('projects_tags', BASE.metadata,
+                           Column('projects_id', Integer, ForeignKey('projects.project_id')),
+                           Column('tags_id', Integer, ForeignKey('tags.tag_id')))
 
 
 def get_session():
     """ read the config file, connect to the given database and return a session with that database"""
     try:
         config = ConfigParser()
-        config.read(config_path)
+        config.read(CONFIG_PATH)
         connection_string = config['General']['Connection']
-        logger.debug("Successfully loaded config file at " + config_path + ".")
+        LOGGER.debug("Successfully loaded config file at " + CONFIG_PATH + ".")
 
     except KeyError:
-        print("Please define a connection string in your config file located at " + config_path + ".")
-        logger.error("Configuration file not found or incomplete. (" + config_path + "). Aborting.")
+        print("Please define a connection string in your config file located at " + CONFIG_PATH + ".")
+        LOGGER.error("Configuration file not found or incomplete. (" + CONFIG_PATH + "). Aborting.")
         sys.exit(-1)
 
     try:
         engine = sqlalchemy.create_engine(connection_string, echo=False)
-        Base.metadata.create_all(engine)
-        logger.debug("Successfully connected to database.")
+        BASE.metadata.create_all(engine)
+        LOGGER.debug("Successfully connected to database.")
 
     except sqlalchemy.exc.ProgrammingError:
-        print("It seems the connection string given in " + config_path + " is invalid. Aborting.")
-        logger.error("Could not connect to database using the connection string found in " + config_path + " (" + \
+        print("It seems the connection string given in " + CONFIG_PATH + " is invalid. Aborting.")
+        LOGGER.error("Could not connect to database using the connection string found in " + CONFIG_PATH + " (" + \
                      connection_string + "). Aborting.")
         sys.exit(-1)
 

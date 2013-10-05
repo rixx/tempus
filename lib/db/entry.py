@@ -5,16 +5,16 @@ import time
 import logging
 from sqlalchemy import Column, Integer, ForeignKey
 from sqlalchemy.orm import relationship
-from .base import Base
+from .base import BASE
 
 
-class Entry(Base):
+class Entry(BASE):
     """ Represents the entries table """
     __tablename__ = "entries"
     logger = logging.getLogger(__name__)
 
-    id = Column(Integer, primary_key=True)
-    project_id = Column(Integer, ForeignKey("projects.id"))
+    entry_id = Column(Integer, primary_key=True)
+    project_id = Column(Integer, ForeignKey("projects.project_id"))
     project = relationship("Project", back_populates="entries")
 
     start = Column(Integer)
