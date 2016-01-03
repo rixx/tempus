@@ -1,0 +1,9 @@
+{% if all_categories %}
+    <ul>
+    {% for category in all_categories %}
+        <li><a href="/t/{{ category.category_name }}/">{{ category.category_name }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No categories are available at this moment.</p>
+{% endif %}
