@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.template import loader
 
 from .models import Category
@@ -11,7 +11,16 @@ def index(request):
     return HttpResponse(template.render(context, request))
 
 def category(request, category):
-    return HttpResponse('This site will show you projects of category {}.'.format(category))
+    try:
+        category = Category.objects.get(category_name=category)
+    except MultipleObjectsReturned:
+        return HttpResponse('Whoops, there appear to be multiple categories named "{}". This is really wrong.'.format(category_name))
+    except DoesNotExist:
+        raise Http404('Category "{}" does not exist.'.format(category.category_name))
+
+    template = loader.get_template('t/category.html')
+    context = {'category': category}
+    return HttpResponse(template.render(context, request))
 
 def project(request, category, project):
     return HttpResponse('This site will show you project {} of category {}.'.format(project, category))
