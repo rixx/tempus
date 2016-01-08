@@ -1,4 +1,4 @@
-{% load static %}
+{% load static staticfiles %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -7,6 +7,33 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     </head>
 	<body>
+
+    <nav class="navbar navbar-default">
+	  <div class="container-fluid">
+		<div class="navbar-header">
+		  <a href="#" class="pull-left">
+			<img alt="Brand" src="{% static 'main/tempus.png' %}" height="54px">
+		  </a>
+		  <a class="navbar-brand" href="#">
+			tempus
+		  </a>
+		</div>
+
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+		  <ul class="nav navbar-nav">
+			<li role="separator" class="divider"></li>
+			<li><a href="/t/">Categories</a></li>
+			<li><a href="/dashboard">Dashboard</a></li>
+		  </ul>
+
+		  <ul class="nav navbar-nav navbar-right">
+			<li><a href="#"><img height="27px" src="{% static 'main/play.png' %}"></a></li>
+		  </ul>
+		</div>
+
+	  </div>
+	</nav>
+
 	{% block content %}
 	{% endblock %}
 
