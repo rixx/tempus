@@ -22,6 +22,19 @@ def category(request, category):
     context = {'category': category}
     return HttpResponse(template.render(context, request))
 
+def new_project(request, category):
+    try:
+        category = Category.objects.get(category_name=category)
+    except MultipleObjectsReturned:
+        return HttpResponse('Whoops, there appear to be multiple categories named "{}". This is really wrong.'.format(category_name))
+    except DoesNotExist:
+        raise Http404('Category "{}" does not exist.'.format(category.category_name))
+
+    template = loader.get_template('t/new_project.html')
+    context = {'category': category}
+    return HttpResponse(template.render(context, request))
+
+
 def project(request, category, project):
     return HttpResponse('This site will show you project {} of category {}.'.format(project, category))
 

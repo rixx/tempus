@@ -1,7 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
 {% if category %}
-    <h1> {{ category.category_name }} </h1>
+    <div class="page-header"> 
+        <h1 class="pull-left">category:{{ category.category_name }} </h1>
+        <h2 class="pull-right"> <a href="/t/{{category.category_name}}/new"> <i style="color:green" class="fa fa-plus-circle"></i></a></h2>
+    </div>
 
     <table class="table">
         <thead><tr><th>Project</th><th>Last activity</th><th>Total time</th></tr></thead>
@@ -18,6 +21,6 @@
     </table>
 
 {% else %}
-    <p>No categories are available at this moment.</p>
+    <p>No projects are available in this category.</p>
 {% endif %}
 {% endblock %}

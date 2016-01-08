@@ -16,6 +16,7 @@ urlpatterns = [
 
     # /t/work/redo_things
     # shows project redo_things from category work
+    url(r'^(?P<category>[a-zA-Z0-9]+)/new/$', views.new_project, name='category'),
     url(r'^(?P<category>[a-zA-Z0-9]+)/(?P<project>[a-zA-Z0-9]+)/$', views.project, name='project'),
 
 ]
