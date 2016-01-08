@@ -1,11 +1,20 @@
 {% extends 'base.html' %}
+{% load static %}
+
 {% block content %}
 {% if all_categories %}
-    <ul>
+<p>
+  <div class="row">
     {% for category in all_categories %}
-        <li><a href="/t/{{ category.category_name }}/">{{ category.category_name }}</a></li>
+      <div class="col-sm-4">
+        <a href="/t/{{ category.category_name }}/">
+            <button role="button" class="btn btn-block btn-lg btn-secondary">
+               <img src="{% get_static_prefix %}timetracking/{{ category.category_name }}.png"><p>
+               <span class="cat-name">{{ category.category_name }}</span>
+            </div>
+        </a>
     {% endfor %}
-    </ul>
+  </div>
 {% else %}
     <p>No categories are available at this moment.</p>
 {% endif %}
