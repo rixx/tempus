@@ -2,14 +2,21 @@
 {% block content %}
 {% if category %}
     <h1> {{ category.category_name }} </h1>
-    {% if category.projects %}
-    <h3> Projects </h3>
-    <ul>
-    {% for project in category.projects %}
-        <li><a href="/t/{{category.category_name}}/{{ project.project_name }}/">{{ project.project_name }}</a></li>
-    {% endfor %}
-    </ul>
-    {% endif %}
+
+    <table class="table">
+        <thead><tr><th>Project</th><th>Last activity</th><th>Total time</th></tr></thead>
+        <tbody>
+            {% for project in category.project_set.all %}
+                <tr>
+                    <th><a href="/t/{{category.category_name}}/{{ project.project_name }}/">{{ project.project_name }}</a></th>
+                    <th>{{ project.delta_to_last_edit }}h ago</th>
+                    <th>{{ project.total_time }}h </th>
+                </tr>
+            {% endfor %}
+
+        </tbody>
+    </table>
+
 {% else %}
     <p>No categories are available at this moment.</p>
 {% endif %}
