@@ -1,26 +1,33 @@
 from django.shortcuts import render
 from django.http import HttpResponse, Http404
 from django.template import loader
+from django.views.generic import CreateView, View, ListView
 
-from .models import Category
+from .models import Category, Project
 
 
-def index(request):
-    template = loader.get_template('t/index.html')
-    context = {'all_categories': Category.objects.all()}
-    return HttpResponse(template.render(context, request))
+class IndexView(View):
+    template_name = 't/index.html'
 
-def category(request, category):
-    try:
-        category = Category.objects.get(category_name=category)
-    except MultipleObjectsReturned:
-        return HttpResponse('Whoops, there appear to be multiple categories named "{}". This is really wrong.'.format(category_name))
-    except DoesNotExist:
-        raise Http404('Category "{}" does not exist.'.format(category.category_name))
+    def get(self, request):
+        context = {'all_categories': Category.objects.all()}
+        return render(request, self.template_name, context)
 
-    template = loader.get_template('t/category.html')
-    context = {'category': category}
-    return HttpResponse(template.render(context, request))
+
+class CategoryView(ListView):
+    model = Project
+    template_name = 't/category.html'
+    context_object_name = 'projects'
+
+    def get_context_data(self, **kwargs):
+        context = super(CategoryView, self).get_context_data(**kwargs)
+        context['category'] = self.kwargs['category']
+        return context
+
+    def get_queryset(self):
+        category = Category.objects.get(category_name = self.kwargs['category'])
+        return category.project_set.all()
+
 
 def new_project(request, category):
     try:
