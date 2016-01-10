@@ -35,18 +35,16 @@ class CreateProjectView(CreateView):
     fields = ['project_name']
     success_url = '/t/'
 
-    def get_initial(self):
-        self.category = Category.objects.get(category_name = self.kwargs['category'])
-        self.success_url = '/t/' + self.category.category_name
-        return {'category_id': self.category.id}
-
     def get_context_data(self, **kwargs):
         context = super(CreateProjectView, self).get_context_data(**kwargs)
         context['category'] = self.kwargs['category']
         return context
 
+    def get_success_url(self):
+        return '/t/' + self.kwargs['category']
+
     def form_valid(self, form):
-        form.instance.category = self.category
+        form.instance.category = Category.objects.get(category_name=self.kwargs['category'])
         return super(CreateView, self).form_valid(form)
 
 
