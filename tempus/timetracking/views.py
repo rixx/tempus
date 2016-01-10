@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, Http404
 from django.template import loader
-from django.views.generic import CreateView, View, ListView
+from django.views.generic import CreateView, View, ListView, DeleteView
 
 from .models import Category, Project
 
@@ -49,6 +49,13 @@ class CreateProjectView(CreateView):
         form.instance.category = self.category
         return super(CreateView, self).form_valid(form)
 
+
+class DeleteProjectView(DeleteView):
+    model = Project
+    template_name = 't/delete_project.html'
+    
+    def get_success_url(self):
+        return '/t/' + self.kwargs['category']
 
 def new_project(request, category):
     try:

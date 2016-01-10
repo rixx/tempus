@@ -17,6 +17,7 @@ urlpatterns = [
     # /t/work/redo_things
     # shows project redo_things from category work
     url(r'^(?P<category>[a-zA-Z0-9]+)/new/$', views.CreateProjectView.as_view(), name='new_project'),
+    url(r'^(?P<category>[a-zA-Z0-9]+)/(?P<pk>[a-zA-Z0-9]+)/delete$', views.DeleteProjectView.as_view(), name='delete_project'),
     url(r'^(?P<category>[a-zA-Z0-9]+)/(?P<project>[a-zA-Z0-9]+)/$', views.project, name='project'),
 
 ]

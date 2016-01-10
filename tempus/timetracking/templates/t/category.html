@@ -9,10 +9,11 @@
 
     {% if projects %}
         <table class="table">
-            <thead><tr><th>Project</th><th>Last activity</th><th>Total time</th></tr></thead>
+            <thead><tr><th></th><th>Project</th><th>Last activity</th><th>Total time</th></tr></thead>
             <tbody>
                 {% for project in projects %}
                     <tr>
+                        <th><a href="/t/{{ project.category }}/{{ project.pk }}/delete"><i style="color:grey" class="fa fa-trash-o"></i></a></th>
                         <th><a href="/t/{{ project.category }}/{{ project }}">{{ project }}</a></th>
                         <th>{{ project.delta_to_last_edit }}h ago</th>
                         <th>{{ project.total_time }}h </th>
