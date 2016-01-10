@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="col-md-12">
+    <form action="" method="post">{% csrf_token %}
+        <p>Are you sure you want to delete "{{ object }}"?</p>
+        <button type="submit" class="btn btn-primary"> Confirm </button>
+        <a href="/t/{{ object.project.category.category_name }}/{{ object.project.project_name }}" class="btn btn-secondary"> Cancel </a>
+    </form>
+</div>
+
+{% endblock %}

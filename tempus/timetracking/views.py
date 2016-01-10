@@ -110,5 +110,13 @@ class CreateEntryView(CreateView):
         return super(CreateView, self).form_valid(form)
 
 
+class DeleteEntryView(DeleteView):
+    model = Entry
+    template_name = 't/delete_entry.html'
+    
+    def get_success_url(self):
+        return '/t/{}/{}'.format(self.kwargs['category'], self.kwargs['project'])
+
+
 def results(request):
     return HttpResponse('Here you will be able to look at your past working habits.')
