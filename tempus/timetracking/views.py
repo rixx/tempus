@@ -44,7 +44,6 @@ class CategoryView(ListView):
 class CreateProjectView(CreateView):
     model = Project
     fields = ['project_name']
-    success_url = '/t/'
     template_name = 't/new_project.html'
 
     def get_context_data(self, **kwargs):
@@ -84,6 +83,32 @@ class ProjectView(ListView):
         category = Category.objects.get(category_name=self.kwargs['category'])
         project = category.project_set.get(project_name=self.kwargs['project'])
         return project.entry_set.all()
+
+class CreateEntryView(CreateView):
+    model = Entry
+    fields = ['start_time', 'end_time']
+    template_name = 't/new_entry.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(CreateEntryView, self).get_context_data(**kwargs)
+        context['category'] = self.kwargs['category']
+        context['project'] = self.kwargs['project']
+        return context
+
+    def get_form(self, form_class):
+        form = super(CreateEntryView, self).get_form(form_class)
+        form.fields['start_time'].widget.attrs.update({'class': 'datetimepicker'})
+        form.fields['end_time'].widget.attrs.update({'class': 'datetimepicker'})
+        return form
+
+    def get_success_url(self):
+        return '/t/{}/{}'.format(self.kwargs['category'], self.kwargs['project'])
+
+    def form_valid(self, form):
+        category = Category.objects.get(category_name=self.kwargs['category'])
+        form.instance.project = category.project_set.get(project_name=self.kwargs['project'])
+        return super(CreateView, self).form_valid(form)
+
 
 def results(request):
     return HttpResponse('Here you will be able to look at your past working habits.')

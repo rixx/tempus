@@ -3,6 +3,7 @@ from django.conf.urls import url
 from .views import (
     results,
     CategoryView,
+    CreateEntryView,
     CreateProjectView,
     DeleteProjectView,
     IndexView,
@@ -25,6 +26,7 @@ urlpatterns = [
     # shows project redo_things from category work
     url(r'^(?P<category>[a-zA-Z0-9]+)/new/$', CreateProjectView.as_view(), name='new_project'),
     url(r'^(?P<category>[a-zA-Z0-9]+)/(?P<pk>[a-zA-Z0-9]+)/delete$', DeleteProjectView.as_view(), name='delete_project'),
+    url(r'^(?P<category>[a-zA-Z0-9]+)/(?P<project>[a-zA-Z0-9]+)/new/$', CreateEntryView.as_view(), name='project'),
     url(r'^(?P<category>[a-zA-Z0-9]+)/(?P<project>[a-zA-Z0-9]+)/$', ProjectView.as_view(), name='project'),
 
 ]
