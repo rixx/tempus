@@ -1,9 +1,21 @@
+from django.http import (
+    HttpResponse,
+    Http404,
+)
 from django.shortcuts import render
-from django.http import HttpResponse, Http404
 from django.template import loader
-from django.views.generic import CreateView, View, ListView, DeleteView
+from django.views.generic import (
+    CreateView, 
+    DeleteView,
+    ListView,
+    View,
+)
 
-from .models import Category, Project, Entry
+from .models import (
+    Category,
+    Entry,
+    Project,
+)
 
 
 class IndexView(View):
@@ -16,8 +28,8 @@ class IndexView(View):
 
 class CategoryView(ListView):
     model = Project
-    template_name = 't/category.html'
     context_object_name = 'projects'
+    template_name = 't/category.html'
 
     def get_context_data(self, **kwargs):
         context = super(CategoryView, self).get_context_data(**kwargs)
@@ -31,9 +43,9 @@ class CategoryView(ListView):
 
 class CreateProjectView(CreateView):
     model = Project
-    template_name = 't/new_project.html'
     fields = ['project_name']
     success_url = '/t/'
+    template_name = 't/new_project.html'
 
     def get_context_data(self, **kwargs):
         context = super(CreateProjectView, self).get_context_data(**kwargs)
@@ -55,23 +67,10 @@ class DeleteProjectView(DeleteView):
     def get_success_url(self):
         return '/t/' + self.kwargs['category']
 
-def new_project(request, category):
-    try:
-        category = Category.objects.get(category_name=category)
-    except MultipleObjectsReturned:
-        return HttpResponse('Whoops, there appear to be multiple categories named "{}". This is really wrong.'.format(category_name))
-    except DoesNotExist:
-        raise Http404('Category "{}" does not exist.'.format(category.category_name))
-
-    template = loader.get_template('t/new_project.html')
-    context = {'category': category}
-    return HttpResponse(template.render(context, request))
-
-
 class ProjectView(ListView):
     model = Entry
-    template_name = 't/project.html'
     context_object_name = 'entries'
+    template_name = 't/project.html'
 
     def get_context_data(self, **kwargs):
         context = super(ProjectView, self).get_context_data(**kwargs)
@@ -85,9 +84,6 @@ class ProjectView(ListView):
         category = Category.objects.get(category_name=self.kwargs['category'])
         project = category.project_set.get(project_name=self.kwargs['project'])
         return project.entry_set.all()
-
-def project(request, category, project):
-    return HttpResponse('This site will show you project {} of category {}.'.format(project, category))
 
 def results(request):
     return HttpResponse('Here you will be able to look at your past working habits.')

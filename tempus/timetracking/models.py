@@ -1,6 +1,8 @@
-from django.db import models
 import datetime
 import pytz
+
+from django.db import models
+
 
 class Category(models.Model):
     category_name = models.CharField(max_length=200)
@@ -8,11 +10,13 @@ class Category(models.Model):
     def __str__(self):
         return self.category_name
 
+
 class Tag(models.Model):
     tag_name = models.CharField(max_length=200)
 
     def __str__(self):
         return self.tag_name
+
 
 class Project(models.Model):
     project_name = models.CharField(max_length=200)
@@ -39,6 +43,7 @@ class Project(models.Model):
             return delta - datetime.timedelta(microseconds=delta.microseconds)
         else:
             return datetime.timedelta(0)
+
 
 class Entry(models.Model):
     project = models.ForeignKey(Project)
