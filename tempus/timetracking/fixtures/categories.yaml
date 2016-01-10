@@ -1,0 +1,9 @@
+- model: timetracking.Category
+  fields:
+      category_name: work
+- model: timetracking.Category
+  fields:
+      category_name: uni
+- model: timetracking.Category
+  fields:
+      category_name: fun
