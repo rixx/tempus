@@ -3,7 +3,7 @@ from django.http import HttpResponse, Http404
 from django.template import loader
 from django.views.generic import CreateView, View, ListView, DeleteView
 
-from .models import Category, Project
+from .models import Category, Project, Entry
 
 
 class IndexView(View):
@@ -67,6 +67,24 @@ def new_project(request, category):
     context = {'category': category}
     return HttpResponse(template.render(context, request))
 
+
+class ProjectView(ListView):
+    model = Entry
+    template_name = 't/project.html'
+    context_object_name = 'entries'
+
+    def get_context_data(self, **kwargs):
+        context = super(ProjectView, self).get_context_data(**kwargs)
+        category = Category.objects.get(category_name=self.kwargs['category'])
+        project = category.project_set.get(project_name=self.kwargs['project'])
+        context['category'] = self.kwargs['category']
+        context['project'] = project
+        return context
+
+    def get_queryset(self):
+        category = Category.objects.get(category_name=self.kwargs['category'])
+        project = category.project_set.get(project_name=self.kwargs['project'])
+        return project.entry_set.all()
 
 def project(request, category, project):
     return HttpResponse('This site will show you project {} of category {}.'.format(project, category))
