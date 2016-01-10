@@ -29,6 +29,27 @@ class CategoryView(ListView):
         return category.project_set.all()
 
 
+class CreateProjectView(CreateView):
+    model = Project
+    template_name = 't/new_project.html'
+    fields = ['project_name']
+    success_url = '/t/'
+
+    def get_initial(self):
+        self.category = Category.objects.get(category_name = self.kwargs['category'])
+        self.success_url = '/t/' + self.category.category_name
+        return {'category_id': self.category.id}
+
+    def get_context_data(self, **kwargs):
+        context = super(CreateProjectView, self).get_context_data(**kwargs)
+        context['category'] = self.kwargs['category']
+        return context
+
+    def form_valid(self, form):
+        form.instance.category = self.category
+        return super(CreateView, self).form_valid(form)
+
+
 def new_project(request, category):
     try:
         category = Category.objects.get(category_name=category)

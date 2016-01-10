@@ -1,13 +1,20 @@
 {% extends 'base.html' %}
 
 {% block content %}
-{% if category %}
-    <div class="page-header"> 
-        <h1 class="pull-left">New Project in category:{{ category.category_name }} </h1>
+    <div class="page-header col-xl-12"> 
+        <h1 class="pull-left">New Project in category:{{ category }} </h1>
     </div>
+    <div class="col-md-12">
+        <form action="" method="post">{% csrf_token %}
+            <div class="modal-body">
+                {{ form.media }}
 
+                    <fieldset class="form-group">
+                        {{ form.as_p }}
+                </fieldset>
+			</div>
+    		<button type="submit" class="btn btn-primary" >Submit</button>
+		</form>
+	</div>
 
-{% else %}
-    <p>Sorry, I couldn't find that category.</p>
-{% endif %}
 {% endblock %}
