@@ -7,10 +7,10 @@
   <div class="row">
     {% for category in all_categories %}
       <div class="col-sm-4">
-        <a href="/t/{{ category.category_name }}/">
+        <a href="/t/{{ category }}/">
             <button role="button" class="btn btn-block btn-lg btn-secondary">
-               <img src="{% get_static_prefix %}timetracking/{{ category.category_name }}.png"><p>
-               <span class="cat-name">{{ category.category_name }}</span>
+               <img src="{% get_static_prefix %}timetracking/{{ category }}.png"><p>
+               <span class="cat-name">{{ category }}</span>
             </div>
         </a>
     {% endfor %}

@@ -5,7 +5,7 @@
     <form action="" method="post">{% csrf_token %}
         <p>Are you sure you want to delete "{{ object }}"?</p>
         <button type="submit" class="btn btn-primary"> Confirm </button>
-        <a href="/t/{{ object.category.category_name }}" class="btn btn-secondary"> Cancel </a>
+        <a href="/t/{{ object.category }}" class="btn btn-secondary"> Cancel </a>
     </form>
 </div>
 

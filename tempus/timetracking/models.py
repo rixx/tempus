@@ -5,26 +5,26 @@ from django.db import models
 
 
 class Category(models.Model):
-    category_name = models.CharField(max_length=200)
+    name = models.CharField(max_length=200)
 
     def __str__(self):
-        return self.category_name
+        return self.name
 
 
 class Tag(models.Model):
-    tag_name = models.CharField(max_length=200)
+    name = models.CharField(max_length=200)
 
     def __str__(self):
-        return self.tag_name
+        return self.name
 
 
 class Project(models.Model):
-    project_name = models.CharField(max_length=200)
+    name = models.CharField(max_length=200)
     category = models.ForeignKey(Category)
     tags = models.ManyToManyField(Tag, blank=True)
 
     def __str__(self):
-        return self.project_name
+        return self.name
 
     def total_time(self):
         if self.entry_set.count() > 0:
@@ -52,7 +52,7 @@ class Entry(models.Model):
 
     def __str__(self):
         ago = datetime.datetime.now(pytz.timezone('Europe/Berlin')) - self.end_time
-        return "Entry of Project {}, {} ago.".format(self.project.project_name,ago - datetime.timedelta(microseconds=ago.microseconds))
+        return "Entry of Project {}, {} ago.".format(self.project.name,ago - datetime.timedelta(microseconds=ago.microseconds))
     
     def duration(self):
         duration = self.end_time - self.start_time

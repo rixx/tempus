@@ -37,13 +37,13 @@ class CategoryView(ListView):
         return context
 
     def get_queryset(self):
-        category = Category.objects.get(category_name = self.kwargs['category'])
+        category = Category.objects.get(name = self.kwargs['category'])
         return category.project_set.all()
 
 
 class CreateProjectView(CreateView):
     model = Project
-    fields = ['project_name']
+    fields = ['name']
     template_name = 't/new_project.html'
 
     def get_context_data(self, **kwargs):
@@ -55,7 +55,7 @@ class CreateProjectView(CreateView):
         return '/t/' + self.kwargs['category']
 
     def form_valid(self, form):
-        form.instance.category = Category.objects.get(category_name=self.kwargs['category'])
+        form.instance.category = Category.objects.get(name=self.kwargs['category'])
         return super(CreateView, self).form_valid(form)
 
 
@@ -73,15 +73,15 @@ class ProjectView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(ProjectView, self).get_context_data(**kwargs)
-        category = Category.objects.get(category_name=self.kwargs['category'])
-        project = category.project_set.get(project_name=self.kwargs['project'])
+        category = Category.objects.get(name=self.kwargs['category'])
+        project = category.project_set.get(name=self.kwargs['project'])
         context['category'] = self.kwargs['category']
         context['project'] = project
         return context
 
     def get_queryset(self):
-        category = Category.objects.get(category_name=self.kwargs['category'])
-        project = category.project_set.get(project_name=self.kwargs['project'])
+        category = Category.objects.get(name=self.kwargs['category'])
+        project = category.project_set.get(name=self.kwargs['project'])
         return project.entry_set.all()
 
 class CreateEntryView(CreateView):
@@ -105,8 +105,8 @@ class CreateEntryView(CreateView):
         return '/t/{}/{}'.format(self.kwargs['category'], self.kwargs['project'])
 
     def form_valid(self, form):
-        category = Category.objects.get(category_name=self.kwargs['category'])
-        form.instance.project = category.project_set.get(project_name=self.kwargs['project'])
+        category = Category.objects.get(name=self.kwargs['category'])
+        form.instance.project = category.project_set.get(name=self.kwargs['project'])
         return super(CreateView, self).form_valid(form)
 
 
