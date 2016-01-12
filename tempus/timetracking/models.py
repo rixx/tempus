@@ -28,7 +28,7 @@ class Project(models.Model):
     tags = models.ManyToManyField(Tag, blank=True)
 
     def __str__(self):
-        return self.name
+        return '{} (Category {})'.format(self.name, self.category)
 
     def total_time(self):
         if self.entry_set.count() > 0:
