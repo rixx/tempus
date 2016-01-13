@@ -1,29 +1,54 @@
 import datetime
+import itertools
 import pytz
 
 from django.db import models
+from django.template.defaultfilters import slugify
 
 
-class Category(models.Model):
-    name = models.CharField(max_length=200, unique=True)
+class BaseTimetracking(models.Model):
+    name = models.CharField(max_length=200)
+    slug = models.SlugField(max_length=40, unique=True)
 
-    def __str__(self):
-        return self.name
-
-
-class Tag(models.Model):
-    name = models.CharField(max_length=200, unique=True)
+    class Meta:
+        abstract=True
 
     def __str__(self):
         return self.name
 
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            self.slug = self.slugify()
 
-class Project(models.Model):
+        super().save(*args, **kwargs)
+
+    def slugify(self, slug_field='slug'):
+        max_length = self.__class__._meta.get_field(slug_field).max_length
+        long_slug = slugify(self.name)
+        slug = slugify(self.name)[:max_length]
+        tries = 0
+
+        while self.__class__.objects.filter(slug=slug).exists():
+            tries += 1
+            ending = '-{}'.format(tries)
+            slug = '{}{}'.format(long_slug[max_length-len(ending), ending])
+
+        return slug
+
+
+class Category(BaseTimetracking):
+    pass
+
+
+class Tag(BaseTimetracking):
+    pass
+
+
+class Project(BaseTimetracking):
 
     class Meta:
         unique_together = (('name', 'category'),)
 
-    name = models.CharField(max_length=200)
     category = models.ForeignKey(Category)
     tags = models.ManyToManyField(Tag, blank=True)
 

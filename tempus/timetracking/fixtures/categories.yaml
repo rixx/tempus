@@ -1,9 +1,12 @@
 - model: timetracking.Category
   fields:
       name: work
+      slug: work
 - model: timetracking.Category
   fields:
       name: uni
+      slug: uni
 - model: timetracking.Category
   fields:
       name: fun
+      slug: fun
