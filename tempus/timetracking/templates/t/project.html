@@ -1,11 +1,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
-{% if category %}
 {% if project %}
     <div class="page-header"> 
-        <h1 class="pull-left">project:{{ category }}/{{ project }} </h1>
-        <h2 class="pull-right"> <a href="/t/{{ category }}/{{ project }}/new"> <i style="color:green" class="fa fa-plus-circle"></i></a></h2>
+        <h1 class="pull-left">project:{{ project.category }}/{{ project }} </h1>
+        <h2 class="pull-right"> <a href="/t/{{ project.category.slug }}/{{ project.slug }}/new"> <i style="color:green" class="fa fa-plus-circle"></i></a></h2>
     </div>
 
     <div class="col-md-12">
@@ -20,7 +19,7 @@
             <tbody>
                 {% for entry in entries %}
                     <tr>
-                        <th><a href="/t/{{ project.category }}/{{ project }}/{{ entry.pk }}/delete"><i style="color:grey" class="fa fa-trash-o"></i></a></th>
+                        <th><a href="/t/{{ project.category.slug }}/{{ project.slug }}/{{ entry.pk }}/delete"><i style="color:grey" class="fa fa-trash-o"></i></a></th>
                         <th>{{ entry.start_time }}</th>
                         <th>{{ entry.end_time }}</th>
                         <th>{{ entry.duration }}h </th>
@@ -34,8 +33,5 @@
 
 {% else %}
     <p>Project not found.</p>
-{% endif %}
-{% else %}
-    <p>Category not found.</p>
 {% endif %}
 {% endblock %}

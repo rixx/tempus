@@ -7,7 +7,7 @@
   <div class="row">
     {% for category in all_categories %}
       <div class="col-sm-4">
-        <a href="/t/{{ category }}/">
+        <a href="/t/{{ category.slug }}/">
             <button role="button" class="btn btn-block btn-lg btn-secondary">
                <img src="{% get_static_prefix %}timetracking/{{ category }}.png"><p>
                <span class="cat-name">{{ category }}</span>
