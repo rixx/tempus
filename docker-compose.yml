@@ -1,0 +1,19 @@
+data:
+  image: aexea/aexea-base
+  volumes:
+    - /home/uid1000
+web:
+  build: .
+  user: uid1000
+  entrypoint: ./manage.py
+  command: "runserver 0.0.0.0:8008"
+  environment:
+      PYTHONUNBUFFERED: 0
+  volumes:
+   - .:/opt/code
+  volumes_from:
+   - data 
+  ports:
+   - "8008:8008"
+  external_links:
+   - axmeta_db_1:db
