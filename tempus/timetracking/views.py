@@ -47,6 +47,7 @@ class CreateProjectView(CreateView):
     template_name = 't/new_project.html'
 
     def get_context_data(self, **kwargs):
+        context = super(CreateProjectView, self).get_context_data(**kwargs)
         context['category'] = self.kwargs['category']
         return context
 

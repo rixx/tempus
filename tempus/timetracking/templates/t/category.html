@@ -14,7 +14,7 @@
                 {% for project in projects %}
                     <tr>
                         <th><a href="/t/{{ project.category.slug }}/{{ project.pk }}/delete"><i style="color:grey" class="fa fa-trash-o"></i></a></th>
-                        <th><a href="/t/{{ project.category.slug }}/{{ project.slug }}">{{ project }}</a></th>
+                        <th><a href="/t/{{ project.category.slug }}/{{ project.slug }}">{{ project.name }}</a></th>
                         <th>{{ project.delta_to_last_edit }}h ago</th>
                         <th>{{ project.total_time }}h </th>
                     </tr>
