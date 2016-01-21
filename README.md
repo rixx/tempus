@@ -1,8 +1,14 @@
 #About
 
-Tempus is CLI time tracking app. It requires Python 3 and SQLAlchemy aswell as some database and corresponding Python 3 drivers (mysql-connector for MySQL).
+Tempus is a time tracking website. It runs on Django and Python.
+Tempus is also CLI time tracking app. It requires Python 3 and SQLAlchemy aswell as some database and corresponding Python 3 drivers (mysql-connector for MySQL).
 
-#Usage
+# website
+
+Just a typical Django project using docker-compose.
+
+# CLI
+##Usage
 
 * `tempus start [project]` starts the timer. If no project is given, the last running project is assumed.
 * `tempus stop` stops the timer.
@@ -15,7 +21,7 @@ Tempus is CLI time tracking app. It requires Python 3 and SQLAlchemy aswell as s
 * `tempus status [project|tag] name` gives general or more specific statistics.
 * `tempus clear` resets the log, all data entries will be lost. Projects and tags are preserved. (to be implemented)
 
-#Todo
+##Todo
 ```
 [ ] put loglevel in config, default to warning
 [ ] moar logging
