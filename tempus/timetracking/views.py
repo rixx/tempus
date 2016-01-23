@@ -5,7 +5,7 @@ from django.http import (
 from django.shortcuts import render
 from django.template import loader
 from django.views.generic import (
-    CreateView, 
+    CreateView,
     DeleteView,
     ListView,
     View,
@@ -56,13 +56,13 @@ class CreateProjectView(CreateView):
 
     def form_valid(self, form):
         form.instance.category = Category.objects.get(slug=self.kwargs['category'])
-        return super(CreateView, self).form_valid(form)
+        return super(CreateProjectView, self).form_valid(form)
 
 
 class DeleteProjectView(DeleteView):
     model = Project
     template_name = 't/delete_project.html'
-    
+
     def get_success_url(self):
         return '/t/' + self.kwargs['category']
 
@@ -106,13 +106,13 @@ class CreateEntryView(CreateView):
     def form_valid(self, form):
         category = Category.objects.get(slug=self.kwargs['category'])
         form.instance.project = category.project_set.get(slug=self.kwargs['project'])
-        return super(CreateView, self).form_valid(form)
+        return super(CreateEntryView, self).form_valid(form)
 
 
 class DeleteEntryView(DeleteView):
     model = Entry
     template_name = 't/delete_entry.html'
-    
+
     def get_success_url(self):
         return '/t/{}/{}'.format(self.kwargs['category'], self.kwargs['project'])
 

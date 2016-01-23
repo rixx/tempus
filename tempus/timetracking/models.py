@@ -1,5 +1,4 @@
 import datetime
-import itertools
 import pytz
 
 from django.db import models
@@ -11,7 +10,7 @@ class BaseTimetracking(models.Model):
     slug = models.SlugField(max_length=40, unique=True)
 
     class Meta:
-        abstract=True
+        abstract = True
 
     def __str__(self):
         return self.name
@@ -31,7 +30,7 @@ class BaseTimetracking(models.Model):
         while self.__class__.objects.filter(slug=slug).exists():
             tries += 1
             ending = '-{}'.format(tries)
-            slug = '{}{}'.format(long_slug[max_length-len(ending), ending])
+            slug = '{}{}'.format(long_slug[max_length-len(ending)], ending)
 
         return slug
 
@@ -58,7 +57,7 @@ class Project(BaseTimetracking):
     def total_time(self):
         if self.entry_set.count() > 0:
             entries = [e.duration() for e in self.entry_set.all()]
-            entries = [e for e in entries if type(e) == datetime.timedelta]
+            entries = [e for e in entries if isinstance(e, datetime.timedelta)]
             entries = sum(entries, datetime.timedelta())
             entries = entries - datetime.timedelta(microseconds=entries.microseconds)
             return entries
@@ -81,8 +80,11 @@ class Entry(models.Model):
 
     def __str__(self):
         ago = datetime.datetime.now(pytz.timezone('Europe/Berlin')) - self.end_time
-        return "Entry of Project {}, {} ago.".format(self.project.name,ago - datetime.timedelta(microseconds=ago.microseconds))
-    
+        return "Entry of Project {}, {} ago.".format(
+            self.project.name,
+            ago - datetime.timedelta(microseconds=ago.microseconds)
+        )
+
     def duration(self):
         duration = self.end_time - self.start_time
         return duration - datetime.timedelta(microseconds=duration.microseconds)
