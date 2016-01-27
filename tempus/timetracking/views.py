@@ -1,9 +1,5 @@
-from django.http import (
-    HttpResponse,
-    Http404,
-)
+from django.http import HttpResponse
 from django.shortcuts import render
-from django.template import loader
 from django.views.generic import (
     CreateView,
     DeleteView,
@@ -37,7 +33,7 @@ class CategoryView(ListView):
         return context
 
     def get_queryset(self):
-        category = Category.objects.get(slug = self.kwargs['category'])
+        category = Category.objects.get(slug=self.kwargs['category'])
         return category.project_set.all()
 
 
@@ -66,6 +62,7 @@ class DeleteProjectView(DeleteView):
     def get_success_url(self):
         return '/t/' + self.kwargs['category']
 
+
 class ProjectView(ListView):
     model = Entry
     context_object_name = 'entries'
@@ -82,6 +79,7 @@ class ProjectView(ListView):
         category = Category.objects.get(slug=self.kwargs['category'])
         project = category.project_set.get(slug=self.kwargs['project'])
         return project.entry_set.all()
+
 
 class CreateEntryView(CreateView):
     model = Entry
