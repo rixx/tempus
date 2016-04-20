@@ -8,7 +8,8 @@ from django.template.defaultfilters import slugify
 
 class BaseTimetracking(models.Model):
     name = models.CharField(max_length=200)
-    slug = models.SlugField(max_length=40, unique=True)
+    slug = models.SlugField(max_length=40)
+    slug_filter = {}
 
     class Meta:
         abstract = True
@@ -35,7 +36,7 @@ class BaseTimetracking(models.Model):
         while self.__class__.objects.filter(slug=slug, **owner_filter).exists():
             tries += 1
             ending = '-{}'.format(tries)
-            slug = '{}{}'.format(long_slug[max_length-len(ending)], ending)
+            slug = '{}{}'.format(long_slug[:max_length-len(ending)], ending)
 
         return slug
 
