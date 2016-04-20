@@ -1,4 +1,0 @@
-# the 'General' section needs at least the 'Connection' attribute
-[General]
-Connection = sqlite:///tempus.db
-
