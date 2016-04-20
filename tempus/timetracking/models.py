@@ -1,6 +1,11 @@
 import datetime
+import random
+import os
+import yaml
+
 import pytz
 
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import models
 from django.template.defaultfilters import slugify
@@ -43,10 +48,16 @@ class BaseTimetracking(models.Model):
 
 class Category(BaseTimetracking):
     owner = models.ForeignKey(User)
+    icon = models.CharField(max_length=60)
 
     class Meta:
         unique_together = (('owner', 'name'), )
 
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            self.icon = get_fontawesome_icon(self.name, default=None)
+
+        super().save(*args, **kwargs)
 
 class Tag(BaseTimetracking):
     owner = models.ForeignKey(User)
@@ -96,3 +107,28 @@ class Entry(models.Model):
     def duration(self):
         duration = self.end_time - self.start_time
         return duration - datetime.timedelta(microseconds=duration.microseconds)
+
+
+def get_fontawesome_icon(name, default=None):
+    with open(os.path.join(settings.PROJECT_PATH, 'timetracking/icons.yml'), 'r') as stream:
+        icons = yaml.load(stream)['icons']
+    name = name.lower()
+    category_match = []
+    name_partial_match = []
+
+    for icon in icons:
+        icon_name = icon['name'].lower()
+        if icon_name == name:
+            return icon['id']
+        if 'filter' in icon.keys() and name in icon['filter']:
+            category_match.append(icon['id'])
+        if name in icon_name or icon_name in name:
+            name_partial_match.append(icon['id'])
+    
+    if category_match:
+        return random.choice(category_match)
+    if name_partial_match:
+        return random.choice(name_partial_match)
+    if not default:
+        return random.choice(icons)['id']
+    return default

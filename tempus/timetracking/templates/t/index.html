@@ -8,8 +8,8 @@
       <div class="col-sm-4">
         <a href="/t/{{ category.slug }}/">
             <button role="button" class="btn btn-block btn-lg btn-secondary">
-               <img src="{% get_static_prefix %}timetracking/{{ category }}.png"><p>
-               <span class="cat-name">{{ category }}</span>
+                <div class="cat-icon"><i class="fa fa-{{ category.icon }} fa-4x" aria-hidden="true"></i></div><p>
+               <div class="cat-name">{{ category }}</div>
                  </div>
         </a>
     {% endfor %}
@@ -17,7 +17,8 @@
       <div class="col-sm-4">
         <a href="/t/new">
             <button role="button" class="btn btn-block btn-lg btn-secondary">
-               <span class="cat-name">Add Category</span>
+               <div class="cat-icon"><i class="fa fa-plus-circle fa-4x" aria-hidden="true"></i></div><p>
+               <div class="cat-name">Add Category</div>
             </div>
         </a>
     {% endif %}
