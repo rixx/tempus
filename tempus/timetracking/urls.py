@@ -3,6 +3,7 @@ from django.conf.urls import url
 from .views import (
     results,
     CategoryView,
+    CreateCategoryView,
     CreateEntryView,
     CreateProjectView,
     DeleteEntryView,
@@ -16,6 +17,7 @@ urlpatterns = [
     url(r'^logout/$', 'django.contrib.auth.views.logout'),
 
     url(r'^results/$', results, name='results'),
+    url(r't/new/$', CreateCategoryView.as_view()),
     url(r'^t/(?P<category>[a-zA-Z0-9\-]+)/$', CategoryView.as_view(), name='category'),
 
     url(r'^t/(?P<category>[a-zA-Z0-9\-]+)/new/$', CreateProjectView.as_view(), name='new_project'),

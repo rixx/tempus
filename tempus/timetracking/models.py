@@ -31,7 +31,7 @@ class BaseTimetracking(models.Model):
         owner_filter = {}
 
         if hasattr(self, 'owner'):
-            owner_filter['owner': self.owner]
+            owner_filter['owner'] = self.owner
 
         while self.__class__.objects.filter(slug=slug, **owner_filter).exists():
             tries += 1

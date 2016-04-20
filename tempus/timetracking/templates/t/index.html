@@ -2,7 +2,6 @@
 {% load static %}
 
 {% block content %}
-{% if all_categories %}
 <p>
   <div class="row">
     {% for category in all_categories %}
@@ -11,11 +10,17 @@
             <button role="button" class="btn btn-block btn-lg btn-secondary">
                <img src="{% get_static_prefix %}timetracking/{{ category }}.png"><p>
                <span class="cat-name">{{ category }}</span>
-            </div>
+                 </div>
         </a>
     {% endfor %}
+    {% if category_still_addable %}
+      <div class="col-sm-4">
+        <a href="/t/new">
+            <button role="button" class="btn btn-block btn-lg btn-secondary">
+               <span class="cat-name">Add Category</span>
+            </div>
+        </a>
+    {% endif %}
   </div>
-{% else %}
-    <p>No categories are available at the moment.</p>
-{% endif %}
+</p>
 {% endblock %}

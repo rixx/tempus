@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="page-header col-xl-12"> 
+        <h1 class="pull-left">New Category:</h1>
+    </div>
+    <div class="col-md-12">
+        <form action="" method="post">{% csrf_token %}
+            <div class="modal-body">
+                {{ form.media }}
+
+                    <fieldset class="form-group">
+                        {{ form.as_p }}
+                </fieldset>
+			</div>
+    		<button type="submit" class="btn btn-primary" >Submit</button>
+		</form>
+	</div>
+
+{% endblock %}

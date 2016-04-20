@@ -22,6 +22,7 @@ class LoggedInMixin(object):
     def dispatch(self, *args, **kwargs):
         return super(LoggedInMixin, self).dispatch(*args, **kwargs)
 
+
 class IndexView(View):
     template_name = 't/index.html'
 
@@ -30,7 +31,27 @@ class IndexView(View):
             return redirect('login/?next={}'.format(request.path))
 
         context = {'all_categories': Category.objects.filter(owner=request.user)}
+        context['category_still_addable'] = len(context['all_categories']) < 3
+        print(context['category_still_addable'])
         return render(request, self.template_name, context)
+
+
+class CreateCategoryView(LoggedInMixin, CreateView):
+    model = Category
+    fields = ['name']
+    template_name = 't/new_category.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(CreateCategoryView, self).get_context_data(**kwargs)
+        context['owner'] = self.request.user
+        return context
+
+    def get_success_url(self):
+        return '/'
+
+    def form_valid(self, form):
+        form.instance.owner = self.request.user
+        return super(CreateCategoryView, self).form_valid(form)
 
 
 class CategoryView(LoggedInMixin, ListView):
