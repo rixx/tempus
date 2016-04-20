@@ -1,6 +1,7 @@
 import datetime
 import pytz
 
+from django.contrib.auth.models import User
 from django.db import models
 from django.template.defaultfilters import slugify
 
@@ -26,8 +27,12 @@ class BaseTimetracking(models.Model):
         long_slug = slugify(self.name)
         slug = slugify(self.name)[:max_length]
         tries = 0
+        owner_filter = {}
 
-        while self.__class__.objects.filter(slug=slug).exists():
+        if hasattr(self, 'owner'):
+            owner_filter['owner': self.owner]
+
+        while self.__class__.objects.filter(slug=slug, **owner_filter).exists():
             tries += 1
             ending = '-{}'.format(tries)
             slug = '{}{}'.format(long_slug[max_length-len(ending)], ending)
@@ -36,20 +41,22 @@ class BaseTimetracking(models.Model):
 
 
 class Category(BaseTimetracking):
-    pass
+    owner = models.ForeignKey(User)
+
+    class Meta:
+        unique_together = (('owner', 'name'), )
 
 
 class Tag(BaseTimetracking):
-    pass
+    owner = models.ForeignKey(User)
 
 
 class Project(BaseTimetracking):
-
-    class Meta:
-        unique_together = (('name', 'category'),)
-
     category = models.ForeignKey(Category)
     tags = models.ManyToManyField(Tag, blank=True)
+
+    class Meta:
+        unique_together = (('slug', 'category'),)
 
     def __str__(self):
         return '{} (Category {})'.format(self.name, self.category)
