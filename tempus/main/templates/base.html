@@ -25,6 +25,13 @@
 		  </ul>
 
 		  <ul class="pull-xs-right nav navbar-nav">
+
+			  {% if user.is_anonymous %}
+                <li class="nav-item"><a class="nav-link" href="{% url 'django.contrib.auth.views.login' %}">login</a></li>
+			  {% else %}
+                <li class="nav-item"><a class="nav-link" href="#">{{ user }}</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'django.contrib.auth.views.logout' %}">logout</a></li>
+              {% endif %}
 			<li class="nav-item"><a class="nav-link" href="#"><img height="27px" src="{% static 'main/play.png' %}"></a></li>
 		  </ul>
 		</div>

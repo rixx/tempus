@@ -13,6 +13,9 @@ from .views import (
 
 urlpatterns = [
     url(r'^$', IndexView.as_view(), name='index'),
+    url(r'^login/$', 'django.contrib.auth.views.login'),
+    url(r'^logout/$', 'django.contrib.auth.views.logout'),
+
     url(r'^results/$', results, name='results'),
     url(r'^(?P<category>[a-zA-Z0-9\-]+)/$', CategoryView.as_view(), name='category'),
 
