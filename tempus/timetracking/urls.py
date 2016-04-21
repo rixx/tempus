@@ -1,4 +1,4 @@
-from django.conf.urls import url
+from django.conf.urls import include, url
 
 from .views import (
     results,
@@ -13,8 +13,7 @@ from .views import (
 )
 
 urlpatterns = [
-    url(r'^login/$', 'django.contrib.auth.views.login'),
-    url(r'^logout/$', 'django.contrib.auth.views.logout'),
+    url('^', include('django.contrib.auth.urls')),
 
     url(r'^results/$', results, name='results'),
     url(r't/new/$', CreateCategoryView.as_view()),
