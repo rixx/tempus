@@ -110,20 +110,33 @@ class Entry(models.Model):
 
 
 def get_fontawesome_icon(name, default=None):
+    def has_list(obj, name):
+        return (name in obj.keys()) and isinstance(obj[name], list)
+
     with open(os.path.join(settings.PROJECT_PATH, 'timetracking/icons.yml'), 'r') as stream:
         icons = yaml.load(stream)['icons']
+
     name = name.lower()
     category_match = []
     name_partial_match = []
 
     for icon in icons:
         icon_name = icon['name'].lower()
+        # first off, return direct matches
         if icon_name == name:
             return icon['id']
-        if 'filter' in icon.keys() and name in icon['filter']:
+        if has_list(icon, 'aliases') and name in icon['aliases']:
+            return icon['id']
+
+        # next, collect category matches to choose randomly from
+        if has_list(icon, 'filter') and name in icon['filter']:
             category_match.append(icon['id'])
+
+        # lastly, collect partial matches to choose randomly from
         if name in icon_name or icon_name in name:
             name_partial_match.append(icon['id'])
+        if has_list(icon, 'aliases'):
+            name_partial_match += [alias for alias in icon['aliases'] if (name in alias or alias in name)]
     
     if category_match:
         return random.choice(category_match)
