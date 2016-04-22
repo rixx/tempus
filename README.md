@@ -1,9 +1,10 @@
 #About
 
 Tempus is a time tracking website. It runs on Django and Python.
-Tempus is also CLI time tracking app. It requires Python 3 and SQLAlchemy aswell as some database and corresponding Python 3 drivers (mysql-connector for MySQL).
 
-# website
+It features Users, Projects (with Tags) ordered by Category and (notimplementederror) a dashboard with results.
 
-Just a typical Django project using docker-compose.
+## Future
 
+ - Dashboard with results
+ - cooperation/teams/groups
